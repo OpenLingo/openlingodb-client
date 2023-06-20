@@ -1,0 +1,6 @@
+<h2>Top Nouns</h2>
+<div class="nouns-menu">
+  <a *ngFor="let noun of nouns" routerLink="/detail/{{noun.id}}">
+    {{noun.english}}
+  </a>
+</div>

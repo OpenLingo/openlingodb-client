@@ -1,0 +1,39 @@
+.login-container {
+  display: flex;
+  width: 100vw;
+  background-color: transparent;
+  justify-content: center;
+}
+
+.login-content {
+  border-style: solid;
+  border-color: var(--main-highlight-colour);
+  border-width: 5px;
+  border-radius: 15px;
+  margin: 10vh;
+  padding: 5vw;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  line-height: 2rem;
+  color: var(--main-highlight-colour);
+}
+input {
+  font-size: 12pt;
+  box-sizing: border-box;
+  width: max(15vw, 100px);
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 0.5rem;
+  border-color: var(--main-highlight-colour);
+  outline-style: unset;
+  padding: 0.5rem;
+}
+input:focus {
+  border-color: var(--secondary-highlight-colour);
+}
