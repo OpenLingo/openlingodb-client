@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Noun } from '../noun';
-import { NounService } from '../services/noun.service';
+import { Noun } from '../../models/noun';
+import { NounService } from '../../services/noun.service';
 
 @Component({
   selector: 'app-dashboard',

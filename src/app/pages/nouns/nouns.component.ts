@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Noun } from '../noun';
-import { NounService } from "../services/noun.service";
-import { MessageService } from "../message.service";
+import { Noun } from '../../models/noun';
+import { NounService } from "../../services/noun.service";
+import { MessageService } from "../../services/message.service";
 import { OnInit } from "@angular/core";
 
 @Component({

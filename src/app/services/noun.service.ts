@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Noun } from './noun';
-import { NOUNS } from './mock-nouns';
+import { Noun } from '../models/noun';
+import { NOUNS } from '../mock-nouns';
 import { Observable, of } from "rxjs";
 import { MessageService } from './message.service'
 

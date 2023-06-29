@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Noun } from '../noun';
+import { Noun } from '../../models/noun';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { NounService } from '../services/noun.service';
+import { NounService } from '../../services/noun.service';
 import { OnInit} from "@angular/core";
 
 @Component({

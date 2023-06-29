@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NounsComponent } from './nouns/nouns.component';
-import { NounDetailComponent } from './noun-detail/noun-detail.component';
-import { MessagesComponent } from './messages/messages.component';
+import { NounsComponent } from './pages/nouns/nouns.component';
+import { NounDetailComponent } from './pages/noun-detail/noun-detail.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { NavbarComponent } from './pages/navbar/navbar.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LoginComponent } from './login/login.component';
     MessagesComponent,
     DashboardComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

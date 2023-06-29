@@ -1,4 +1,4 @@
-import { Noun } from './noun';
+import { Noun } from './models/noun';
 
 export const NOUNS : Noun[] = [
   {id : 1, english : 'Mother', german : 'Mutter'},
