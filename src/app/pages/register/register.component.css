@@ -1,0 +1,127 @@
+.register-container {
+  display: flex;
+  width: 100vw;
+  background-color: transparent;
+  /*background: linear-gradient(170deg, var(--main-highlight-colour),
+  var(--main-highlight-colour) 70%,
+  var(--main-colour) 100%);*/
+  justify-content: center;
+}
+.register-content-border {
+  background: linear-gradient(
+    var(--secondary-highlight-colour),
+    var(--secondary-highlight-colour) 60%,
+    var(--tertiary-highlight-colour) 90%
+  );
+  margin: max(15vh, 10px);
+  padding:0.4rem;
+  border-radius: 1.3rem;
+}
+.register-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  border-radius: 1rem;
+  padding: 1rem 2rem 1rem; /*top, sides, bottom*/
+  background-color: var(--background-colour);
+}
+
+.personal-details {
+  grid-row-start: 2;
+  grid-column-start: 1;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.language-details {
+  grid-row-start: 2;
+  grid-column-start: 2;
+  margin-left: 1rem;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-button {
+  background-color: var(--secondary-highlight-colour);
+  color: var(--main-highlight-colour);
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content button {
+  border: none;
+  margin: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem;
+  color: var(--main-highlight-colour);
+  background-color: var(--background-colour);
+  border-radius: unset;
+
+}
+.dropdown-content button:hover {
+  background-color: var(--secondary-highlight-colour);
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  grid-row-start: 1;
+}
+
+label {
+  display: block;
+  line-height: 2rem;
+  color: var(--main-highlight-colour);
+}
+input {
+  font-size: 12pt;
+  width: 25rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-radius: 0.5rem;
+  border-color: var(--main-highlight-colour);
+  outline-style: unset;
+  padding: 0.5rem;
+}
+input:focus {
+  border-color: var(--secondary-highlight-colour);
+}
+
+button {
+  margin: 1rem 0 0;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  width: 15rem;
+  align-self: center;
+}
+.create-account-button {
+  grid-row-start: 3;
+  grid-column: span 2;
+  justify-self: center;
+  background-color: var(--background-colour);
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--tertiary-highlight-colour);
+  color: var(--main-highlight-colour);
+}
+.create-account-button:hover {
+  background-color: var(--secondary-highlight-colour);
+  color: var(--main-highlight-colour);
+  border-style: solid;
+  border-color: transparent;
+}

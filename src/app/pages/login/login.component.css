@@ -1,0 +1,74 @@
+.login-container {
+  display: flex;
+  width: 100vw;
+  background-color: transparent;
+  /*background: linear-gradient(170deg, var(--main-highlight-colour),
+  var(--main-highlight-colour) 70%,
+  var(--main-colour) 100%);*/
+  justify-content: center;
+}
+
+.login-content-border {
+  background: linear-gradient(
+    var(--secondary-highlight-colour),
+    var(--secondary-highlight-colour) 60%,
+    var(--tertiary-highlight-colour) 90%
+  );
+  margin: max(15vh, 10px);
+  padding:0.4rem;
+  border-radius: 1.3rem;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1rem;
+  padding: 1rem 2rem 1rem; /*top, sides, bottom*/
+  background-color: var(--background-colour);
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  line-height: 2rem;
+  color: var(--main-highlight-colour);
+}
+input {
+  font-size: 12pt;
+  width: 25rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-radius: 0.5rem;
+  border-color: var(--main-highlight-colour);
+  outline-style: unset;
+  padding: 0.5rem;
+}
+input:focus {
+  border-color: var(--secondary-highlight-colour);
+}
+
+button {
+  margin: 1rem 0 0;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  width: 15rem;
+  align-self: center;
+}
+.sign-in-button {
+  background-color: var(--secondary-highlight-colour);
+  color: var(--main-highlight-colour);
+}
+.forgot-password-button {
+  background-color: var(--background-colour);
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--tertiary-highlight-colour);
+  color: var(--main-highlight-colour);
+}

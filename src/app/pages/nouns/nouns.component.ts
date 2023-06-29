@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Noun } from '../noun';
-import { NounService } from "../noun.service";
+import { NounService } from "../services/noun.service";
 import { MessageService } from "../message.service";
 import { OnInit } from "@angular/core";
 
