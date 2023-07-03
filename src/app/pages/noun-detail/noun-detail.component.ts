@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Noun } from '../../models/noun';
+import { Noun } from '../../models/noun.model';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NounService } from '../../services/noun.service';

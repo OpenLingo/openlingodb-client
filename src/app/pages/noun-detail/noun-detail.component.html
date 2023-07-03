@@ -1,11 +1,9 @@
 <div *ngIf="noun" style="float: right;">
-  <h2>{{noun.english | titlecase}} Details</h2>
+  <h2>{{noun.word | titlecase}} Details</h2>
   <div>id: {{noun.id}}</div>
   <div style="align-content: center">
     <label for="noun-english">English: </label>
-    <input id="noun-english" [(ngModel)]="noun.english" placeholder="English">
-    <label for="noun-german"> German: </label>
-    <input id="noun-german" [(ngModel)]="noun.german" placeholder="German">
+    <input id="noun-english" [(ngModel)]="noun.word" placeholder="English">
   </div>
   <button type="button" (click)="goBack()">go back</button>
 </div>

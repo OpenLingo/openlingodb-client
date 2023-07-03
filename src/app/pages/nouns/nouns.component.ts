@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Noun } from '../../models/noun';
+import { Noun } from '../../models/noun.model';
 import { NounService } from "../../services/noun.service";
 import { MessageService } from "../../services/message.service";
 import { OnInit } from "@angular/core";

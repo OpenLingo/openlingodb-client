@@ -1,8 +1,8 @@
 <h2>Nouns</h2>
-<ul class="nouns"style="float: left;">
+<ul class="nouns" style="float: left;">
   <li *ngFor="let noun of nouns">
     <a routerLink="/detail/{{noun.id}}">
-      <span class="badge">{{noun.id}}</span> {{noun.english}}
+      <span class="badge">{{noun.id}}</span> {{noun.word}}
     </a>
   </li>
 </ul>
