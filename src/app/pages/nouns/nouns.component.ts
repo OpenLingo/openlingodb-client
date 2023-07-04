@@ -18,7 +18,7 @@ export class NounsComponent implements OnInit {
     this.getNouns();
   }
   getNouns(): void {
-    this.nounService.getNouns().subscribe(nouns => this.nouns = nouns)
+    this.nounService.getNouns().subscribe(incoming_nouns => this.nouns = incoming_nouns)
   }
 }
 

@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class NounService {
 
-  private nounsUrl = 'https://127.0.0.1:5000/api/noun';
+  private nounsUrl = 'http://127.0.0.1:5000/api/noun';
 
   getNouns(): Observable<Noun[]> {
     return this.http.get<Noun[]>(this.nounsUrl);
