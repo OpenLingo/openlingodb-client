@@ -10,16 +10,18 @@ import { OnInit } from "@angular/core";
   styleUrls: ['./nouns.component.css']
 })
 export class NounsComponent implements OnInit {
-  nouns : Noun[] = [];
+    nouns : Noun[] = [];
 
-  constructor(private nounService : NounService,
-              private messageService : MessageService) {}
-  ngOnInit(): void {
-    this.getNouns();
-  }
-  getNouns(): void {
-    this.nounService.getNouns().subscribe(incoming_nouns => this.nouns = incoming_nouns)
-  }
+    constructor(
+        private nounService : NounService,
+        private messageService : MessageService
+    ) {}
+    ngOnInit(): void {
+        this.getNouns();
+    }
+    getNouns(): void {
+        this.nounService.getNouns().subscribe(incoming_nouns => this.nouns = incoming_nouns)
+    }
 }
 
 

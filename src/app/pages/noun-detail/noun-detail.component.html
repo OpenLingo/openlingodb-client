@@ -1,9 +1,10 @@
 <div *ngIf="noun" style="float: right;">
-  <h2>{{noun.word | titlecase}} Details</h2>
-  <div>id: {{noun.id}}</div>
-  <div style="align-content: center">
-    <label for="noun-english">English: </label>
-    <input id="noun-english" [(ngModel)]="noun.word" placeholder="English">
-  </div>
-  <button type="button" (click)="goBack()">go back</button>
+    <h2>{{noun.word | titlecase}} Details</h2>
+    <div>id: {{noun.id}}</div>
+    <div style="align-content: center">
+        <label for="noun-english">English: </label>
+        <input id="noun-english" [(ngModel)]="noun.word" placeholder="English">
+    </div>
+    <button type="button" (click)="save()">save</button>
+    <button type="button" (click)="goBack()">go back</button>
 </div>
