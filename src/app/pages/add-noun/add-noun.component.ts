@@ -11,22 +11,26 @@ import {MessageService} from "../../services/message.service";
   styleUrls: ['./add-noun.component.css']
 })
 export class AddNounComponent implements OnInit {
+
     languages: Language[] = [];
 
-    word: string = '';
-    language: number = 0;
-    gender: string = ''
+    word: string | undefined;
+    language: Language | undefined;
+    gender: string | undefined;
 
     constructor(
         private languageService : LanguageService,
         private messageService : MessageService
     ) {}
 
-    add_noun(): void {
-
-    }
-    ngOnInit() {
+    ngOnInit() : void {
         this.languageService.getLanguages()
             .subscribe(incoming_languages => this.languages = incoming_languages)
+    }
+
+    save() : void {
+        if (this.word && this.language && this.gender) {
+
+        }
     }
 }

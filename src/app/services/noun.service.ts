@@ -10,14 +10,17 @@ import { Observable, of } from "rxjs";
 })
 
 export class NounService {
+
     private nounsUrl: string = 'http://127.0.0.1:5000/api/noun';
+    // No idea what this does.
     httpOptions = {
         headers: new HttpHeaders({ 'Content-type': 'application/json'})
     }
+
     constructor(
         private http: HttpClient,
         private messageService : MessageService
-    ) { }
+    ) {}
 
     getNouns(): Observable<Noun[]> {
         return this.http.get<Noun[]>(this.nounsUrl)
@@ -36,11 +39,13 @@ export class NounService {
             );
     }
 
+    // What is the difference between put and post?
     updateNoun(noun: Noun): Observable<any> {
-        return this.http.put(this.nounsUrl, noun, this.httpOptions).pipe(
-            tap(_ => this.log(`updated noun id=${noun.id}`)),
-            catchError(this.handleError<any>('updatedNoun'))
-        )
+        return this.http.put(this.nounsUrl + `/update${noun.id}`, noun, this.httpOptions)
+            .pipe(
+                tap(_ => this.log(`updated noun id=${noun.id}`)),
+                catchError(this.handleError<any>('updatedNoun'))
+            )
     }
 
     private log(message: string) {

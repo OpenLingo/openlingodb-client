@@ -10,7 +10,7 @@ import { OnInit } from "@angular/core";
   styleUrls: ['./nouns.component.css']
 })
 export class NounsComponent implements OnInit {
-    nouns : Noun[] = [];
+    nouns: Noun[] = [];
 
     constructor(
         private nounService : NounService,

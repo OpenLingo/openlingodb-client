@@ -2,14 +2,18 @@
     <label for="word">Please enter the noun you would like to add:</label>
     <input id="word">
     <label for="language">Please choose what language your noun belongs to:</label>
-    <select name="languages" id="language">
-        <option *ngFor="let language of languages;">{{language.title}}</option>
+    <select [(ngModel)]="language" name="languages" id="language">
+        <option value="" selected hidden>Please choose a language...</option>
+        <option *ngFor="let lang of languages;">{{lang.title}}</option>
     </select>
-    <label for="gender">Please choose the gender of your noun:</label>
-    <select name="gender" id="gender">
-        <option>Masculine</option>
-        <option>Feminine</option>
-        <option>Neuter</option>
-    </select>
+    <div style="display: flex; flex-direction: column;">
+        <label for="gender">Please choose the gender of your noun:</label>
+        <select name="gender" id="gender">
+            <option>Masculine</option>
+            <option>Feminine</option>
+            <option>Neuter</option>
+        </select>
+    </div>
+    <button (click)="save()">Save</button>
 </div>
 

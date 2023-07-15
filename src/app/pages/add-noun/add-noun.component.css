@@ -1,6 +1,8 @@
 .add-noun-container {
+    width: 20%;
     position: relative;
     display: flex;
+    flex-direction: column;
     padding: 1rem;
 }
 
