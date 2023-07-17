@@ -39,6 +39,16 @@ export class NounService {
             );
     }
 
+    insertNoun(noun: Noun): Observable<any> {
+        return this.http.put(`${this.nounsUrl}/insert`, noun, this.httpOptions)
+            .pipe(
+                tap(_ => this.log(
+                    `inserted noun '${noun.word}', with language_id=${noun.language_id}, and gender=${noun.gender}`
+                )),
+                catchError(this.handleError<Noun>(`insertNoun word=${noun.word}`))
+            )
+    }
+
     // What is the difference between put and post?
     updateNoun(noun: Noun): Observable<any> {
         return this.http.put(this.nounsUrl + `/update${noun.id}`, noun, this.httpOptions)
