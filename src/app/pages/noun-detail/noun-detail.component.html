@@ -1,10 +1,21 @@
 <div *ngIf="noun" style="padding: 1rem;">
     <h2>{{noun.word | titlecase}} Details</h2>
     <div><span>id: </span>{{noun.id}}</div>
+
     <div>
-        <label for="noun-english">English: </label>
-        <input id="noun-english" [(ngModel)]="noun.word" placeholder="English">
+        <label for="noun">Word: </label>
+        <input id="noun" [(ngModel)]="noun.word" placeholder="Word">
     </div>
+
+    <div *ngIf="language && language.is_gendered" style="display: flex; flex-direction: column; width: 20%">
+        <label for="gender">Please choose the gender of your noun:</label>
+        <select [(ngModel)]="noun.gender" name="gender" id="gender">
+            <option value="m">Masculine</option>
+            <option value="f">Feminine</option>
+            <option value="n">Neuter</option>
+        </select>
+    </div>
+
+    <button type="button" (click)="save()">save</button>
+    <button type="button" (click)="goBack()">go back</button>
 </div>
-<button type="button" (click)="save()">save</button>
-<button type="button" (click)="goBack()">go back</button>

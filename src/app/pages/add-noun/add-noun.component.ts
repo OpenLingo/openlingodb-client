@@ -4,32 +4,28 @@ import { Language} from "../../models/language.model";
 import { NounService } from "../../services/noun.service";
 import { LanguageService } from "../../services/language.service";
 import { Location } from "@angular/common";
-import { MessageService } from "../../services/message.service";
 
 @Component({
   selector: 'app-add-noun',
   templateUrl: './add-noun.component.html',
   styleUrls: ['./add-noun.component.css']
 })
+
 export class AddNounComponent implements OnInit {
-
     languages: Language[] = [];
-
-    word: string | undefined;
-    language: Language | undefined;
     gender: string | undefined;
+    language: Language | undefined;
+    word: string | undefined;
 
     constructor(
         private languageService : LanguageService,
         private location : Location,
-        private nounService: NounService,
-        private messageService : MessageService
+        private nounService: NounService
     ) {}
 
     ngOnInit() : void {
         this.languageService.getLanguages()
             .subscribe(incoming_languages => this.languages = incoming_languages)
-        this.language = this.languages[0]
     }
 
     save() : void {

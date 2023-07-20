@@ -3,19 +3,23 @@ import { Noun } from '../../models/noun.model';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NounService } from '../../services/noun.service';
+import {Language} from "../../models/language.model";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
     selector: 'app-noun-detail',
     templateUrl: './noun-detail.component.html',
     styleUrls: ['./noun-detail.component.css']
 })
-export class NounDetailComponent implements OnInit {
 
+export class NounDetailComponent implements OnInit {
     noun: Noun | undefined; // ask about variables in typescript.
+    language: Language | undefined;
 
     constructor(
         private route: ActivatedRoute,
         private nounService: NounService,
+        private languageService: LanguageService,
         private location: Location
     ){}
 
@@ -28,10 +32,20 @@ export class NounDetailComponent implements OnInit {
         const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
 
         this.nounService.getNoun(id)
-            /* This line is dog shit. It shouldn't want an array index to make it work.
-               data at the server end probably needs to be formatted differently before
-               being sent to the client. */
-            .subscribe(incoming_noun => this.noun = incoming_noun);
+            .subscribe(incoming_noun => {
+                this.noun = incoming_noun;
+                console.log(incoming_noun)
+                // Interpreter refuses to let me call this function in ngOnInit for some reason.
+                this.getLanguage(incoming_noun)
+            });
+    }
+    getLanguage(noun: Noun): void {
+        this.languageService.getLanguage(noun.language_id)
+            .subscribe(incoming_language => {
+                this.language = incoming_language;
+                console.log(incoming_language)
+
+            })
     }
     save(): void {
         if(this.noun) {

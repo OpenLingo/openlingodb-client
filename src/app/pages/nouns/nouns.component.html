@@ -1,10 +1,12 @@
 <div class="noun_container">
     <h2>Nouns</h2>
+
     <button class="noun_button" *ngFor="let noun of nouns;" routerLink="/noun-detail/{{noun.id}}">
         <div class="noun_button_left_align">
             <p class="noun_button_id">{{noun.id}}</p>
             <p class="noun_button_word">{{noun["word"]}}</p>
         </div>
+
         <div class="noun_button_right_align">
             <p class="noun_button_language">{{noun["language"]}}</p>
         </div>

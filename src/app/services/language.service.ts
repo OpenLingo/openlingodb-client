@@ -10,20 +10,30 @@ import {MessageService} from "./message.service";
 })
 
 export class LanguageService {
-    private nounsUrl: string = 'http://127.0.0.1:5000/api/language';
+    private languagesUrl: string = 'http://127.0.0.1:5000/api/language';
     httpOptions = {
         headers: new HttpHeaders({ 'Content-type': 'application/json'})
     }
+
     constructor(
         private http: HttpClient,
         private messageService : MessageService) {
     }
 
     getLanguages(): Observable<Language[]> {
-        return this.http.get<Language[]>(this.nounsUrl)
+        return this.http.get<Language[]>(this.languagesUrl)
             .pipe(
-                tap(_ => this.log('fetched nouns')),
-                catchError(this.handleError<Language[]>('getNouns', []))
+                tap(_ => this.log('fetched languages')),
+                catchError(this.handleError<Language[]>('getLanguages', []))
+            );
+    }
+    getLanguage(id: number): Observable<Language> {
+        const route = `${this.languagesUrl}/${id}`;
+
+        return this.http.get<Language>(route)
+            .pipe(
+                tap(_ => this.log(`fetched language id = ${id}`)),
+                catchError(this.handleError<Language>(`getLanguage id=${id}`))
             );
     }
     private log(message: string) {

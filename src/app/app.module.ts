@@ -8,7 +8,6 @@ import { NounsComponent } from './pages/nouns/nouns.component';
 import { NounDetailComponent } from './pages/noun-detail/noun-detail.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -20,7 +19,6 @@ import { AddNounComponent } from './pages/add-noun/add-noun.component';
     NounsComponent,
     NounDetailComponent,
     MessagesComponent,
-    DashboardComponent,
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
@@ -35,4 +33,5 @@ import { AddNounComponent } from './pages/add-noun/add-noun.component';
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

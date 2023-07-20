@@ -10,7 +10,6 @@ import { Observable, of } from "rxjs";
 })
 
 export class NounService {
-
     private nounsUrl: string = 'http://127.0.0.1:5000/api/noun';
     // No idea what this does.
     httpOptions = {
@@ -29,16 +28,16 @@ export class NounService {
                 catchError(this.handleError<Noun[]>('getNouns', []))
             );
     }
-
     getNoun(id: number): Observable<Noun> {
         const route = `${this.nounsUrl}/${id}`;
+
         return this.http.get<Noun>(route)
             .pipe(
                 tap(_ => this.log(`fetched noun id = ${id}`)),
                 catchError(this.handleError<Noun>(`getNoun id=${id}`))
             );
     }
-
+    // ask about the benefits of this returning an observable.
     insertNoun(noun: Noun): Observable<any> {
         return this.http.put(`${this.nounsUrl}/insert`, noun, this.httpOptions)
             .pipe(
@@ -48,7 +47,6 @@ export class NounService {
                 catchError(this.handleError<Noun>(`insertNoun word=${noun.word}`))
             )
     }
-
     // What is the difference between put and post?
     updateNoun(noun: Noun): Observable<any> {
         return this.http.put(this.nounsUrl + `/update${noun.id}`, noun, this.httpOptions)
@@ -57,11 +55,9 @@ export class NounService {
                 catchError(this.handleError<any>('updatedNoun'))
             )
     }
-
     private log(message: string) {
         this.messageService.add(`NounService: ${message}`);
     }
-
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             console.error(error);
