@@ -31,7 +31,7 @@ export class NounDetailComponent implements OnInit {
             /* This line is dog shit. It shouldn't want an array index to make it work.
                data at the server end probably needs to be formatted differently before
                being sent to the client. */
-            .subscribe(incoming_noun => this.noun = incoming_noun[0]);
+            .subscribe(incoming_noun => this.noun = incoming_noun);
     }
     save(): void {
         if(this.noun) {
