@@ -15,7 +15,20 @@
             <option value="n">Neuter</option>
         </select>
     </div>
+`
+    <div style="width: 20%; display: flex; flex-direction: column;">
+        <div *ngFor="let translation in translations">
 
+        </div>
+        <label for="new_translation">Add a new translation: </label>
+        <div id="new_translation" style="display: flex; flex-direction: column">
+            <input id="noun_search" placeholder="Enter a noun to search">
+            <select name="new translation">
+<!--                <option *ngFor="let noun of nouns if noun.word.includes(noun_search.value)"></option>-->
+            </select>
+        </div>
+        <button>Add</button>
+    </div>
     <button type="button" (click)="save()">save</button>
     <button type="button" (click)="goBack()">go back</button>
 </div>

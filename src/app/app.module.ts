@@ -12,6 +12,7 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AddNounComponent } from './pages/add-noun/add-noun.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AddNounComponent } from './pages/add-noun/add-noun.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
