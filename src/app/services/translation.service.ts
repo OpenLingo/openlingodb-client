@@ -11,10 +11,13 @@ import { Noun } from "../models/noun.model";
 })
 
 export class TranslationService {
-    private translationsUrl: string = 'http://127.0.0.1:5000/api/translation';
+    private translationUrl: string = 'http://127.0.0.1:5000/api/noun_translation';
     // No idea what this does.
     httpOptions = {
-        headers: new HttpHeaders({'Content-type': 'application/json'})
+        headers: new HttpHeaders({
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        })
     }
 
     constructor(
@@ -22,8 +25,8 @@ export class TranslationService {
         private messageService: MessageService
     ) { }
 
-    getTranslations(): Observable<Translation[]> {
-        return this.http.get<Translation[]>(this.translationsUrl)
+    getTranslations(noun: Noun): Observable<Translation[]> {
+        return this.http.get<Translation[]>(`${this.translationUrl}/${noun.id}`)
             .pipe(
                 tap(_ => this.log('fetched translations')),
                 catchError(this.handleError<Translation[]>('getTranslations', []))
@@ -31,13 +34,34 @@ export class TranslationService {
     }
 
     insertTranslation(translation: Translation): Observable<any> {
-        return this.http.put(`${this.translationsUrl}/insert`, translation, this.httpOptions)
+        return this.http.put(`${this.translationUrl}/insert`, translation, this.httpOptions)
             .pipe(
                 tap(_ => this.log(
-                    `inserted translation: '${translation.to_noun_id}', for noun '${translation.from_noun_id}'`
+                    `inserted translation: '${translation.from_noun_id}' to '${translation.to_noun_id}'`
                 )),
-                catchError(this.handleError<Noun>(`insertTranslation word=${translation.from_noun_id}`))
+                catchError(this.handleError<Translation>(`insertTranslation translation=${translation}`))
             )
+    }
+
+    insertTranslations(translations: Translation[]): Observable<any> {
+        return this.http.put(`${this.translationUrl}/insert`, translations, this.httpOptions)
+            .pipe(
+                tap(_ => this.log(
+                    `inserted translation: '${translations}', for noun '${translations}'`
+                )),
+                catchError(this.handleError<Translation>(`insertTranslation word=${translations}`))
+            );
+    }
+
+    deleteTranslation(translationID: number, nounID: number): Observable<any> {
+        console.log([translationID, nounID]);
+        return this.http.put(`${this.translationUrl}/delete`, [translationID, nounID], this.httpOptions)
+            .pipe(
+                tap(_ => this.log(
+                    `deleted translation between nouns with ID's: ${nounID} and ${translationID}.`
+                )),
+                catchError(this.handleError<any>(`deleteTranslation IDs=[${nounID}, ${translationID}]`))
+            );
     }
 
     private log(message: string) {

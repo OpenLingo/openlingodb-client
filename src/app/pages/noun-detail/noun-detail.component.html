@@ -2,11 +2,13 @@
     <h2>{{noun.word | titlecase}} Details</h2>
     <div><span>id: </span>{{noun.id}}</div>
 
+<!-- Word editor -->
     <div>
         <label for="noun">Word: </label>
         <input id="noun" [(ngModel)]="noun.word" placeholder="Word">
     </div>
 
+<!-- Gender selector -->
     <div *ngIf="language && language.is_gendered" style="display: flex; flex-direction: column; width: 20%">
         <label for="gender">Please choose the gender of your noun:</label>
         <select [(ngModel)]="noun.gender" name="gender" id="gender">
@@ -15,20 +17,33 @@
             <option value="n">Neuter</option>
         </select>
     </div>
-`
-    <div style="width: 20%; display: flex; flex-direction: column;">
-        <div *ngFor="let translation in translations">
 
+<!-- List of current translations -->
+    <div>
+        <label for="translations">Translations:</label>
+        <div id="translations">
+            <div *ngFor="let translation of translations" style="display: flex; margin: 10px">
+                <p>{{translation['id']}}: {{translation['word']}}</p>
+                <button type="button" (click)="removeTranslation(translation['id'], noun.id)"
+                        style="margin: 0 0 0 10px; padding: 0;">Remove</button>
+            </div>
         </div>
+    </div>
+
+<!-- Add a new translation -->
+    <div style="width: 20%; display: flex; flex-direction: column;">
         <label for="new_translation">Add a new translation: </label>
         <div id="new_translation" style="display: flex; flex-direction: column">
-            <input id="noun_search" placeholder="Enter a noun to search">
-            <select name="new translation">
-<!--                <option *ngFor="let noun of nouns if noun.word.includes(noun_search.value)"></option>-->
+            <input id="noun_search" placeholder="Enter a noun to search" [(ngModel)]="search_term" (keyup)="searchNouns(search_term)">
+            <select *ngIf="nouns" [(ngModel)]="newTranslationID">
+                <option value="" selected disabled hidden>Please choose a translation</option>
+                <option *ngFor="let noun of nouns" value="{{noun.id}}">{{noun.word}}</option>
             </select>
         </div>
-        <button>Add</button>
+        <button type="button" (click)="addTranslation()">Add</button>
     </div>
+
+<!-- Commit controls -->
     <button type="button" (click)="save()">save</button>
     <button type="button" (click)="goBack()">go back</button>
 </div>

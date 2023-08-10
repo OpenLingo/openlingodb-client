@@ -1,8 +1,8 @@
 /* nounsComponent's private CSS styles */
-.noun_container::-webkit-scrollbar {
+.noun_content::-webkit-scrollbar {
     width: 1rem;
 }
-.noun_container::-webkit-scrollbar-track {
+.noun_content::-webkit-scrollbar-track {
     background: var(--main-highlight-colour);
     border-radius: 100vw;
     margin-block: 0.5rem;
@@ -12,12 +12,12 @@
     border: 0.25rem solid var(--main-highlight-colour);
     border-radius: 100vw;
 }
-.noun_container {
+.noun_content {
     display: grid;
     width:50vw;
     padding: 1rem;
     overflow-y:scroll;
-    height:85vh;
+    height: 85vh;
 }
 .noun_button {
     display: flex;

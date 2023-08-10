@@ -1,35 +1,36 @@
 .navbar {
-  display: flex;
-  width: 100vw;
-  background: var(--main-colour)
+    height: 80px;
+    display: flex;
+    width: 100vw;
+    background: var(--main-colour)
 }
 
 .navbar > * {
-  display: flex;
-  flex-shrink: 1;
-  flex-grow: 1;
-  flex-basis: 0;
-  background-color: transparent;
-  padding: 1rem;
+    display: flex;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: transparent;
+    padding: 1rem;
 }
 .nav-left-aligned {
 }
 .nav-right-aligned {
-  justify-content: right;
+    justify-content: right;
 }
 button {
-  color: var(--background-colour);
-  background-color: var(--main-colour);
-  text-align: center;
-  font-size: max(2vh, 10pt);
-  border: none;
-  border-radius: 4px;
-  gap: 1rem;
+    color: var(--background-colour);
+    background-color: var(--main-colour);
+    text-align: center;
+    font-size: max(2vh, 10pt);
+    border: none;
+    border-radius: 4px;
+    gap: 1rem;
 }
 button:hover {
-  color: var(--main-highlight-colour);
-  background-color: var(--secondary-highlight-colour);
+    color: var(--main-highlight-colour);
+    background-color: var(--secondary-highlight-colour);
 }
 * {
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }

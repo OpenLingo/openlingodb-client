@@ -1,4 +1,4 @@
-<div class="noun_container">
+<div class="noun_content">
     <h2>Nouns</h2>
 
     <button class="noun_button" *ngFor="let noun of nouns;" routerLink="/noun-detail/{{noun.id}}">
@@ -8,7 +8,7 @@
         </div>
 
         <div class="noun_button_right_align">
-            <p class="noun_button_language">{{noun["language"]}}</p>
+            <p class="noun_button_language">{{noun.language_id}}</p>
         </div>
     </button>
 </div>

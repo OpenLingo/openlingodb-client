@@ -20,13 +20,17 @@ export class NounDetailComponent implements OnInit {
 
     language: Language | undefined;
 
+    search_term: string = '';
+
     translations: Translation[] | undefined;
-    newTranslation: Translation | undefined;
-    newTranslations: Translation[] | undefined;
+    newTranslationID: string = '';
+    newTranslations: Translation[] = [];
+
+
 
     constructor(
         private route: ActivatedRoute,
-        private nounService: NounService,
+        public nounService: NounService,
         private languageService: LanguageService,
         private translationService: TranslationService,
         private location: Location
@@ -34,10 +38,16 @@ export class NounDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.getNoun();
-        this.getNouns();
     }
-    getNouns(): void {
-        this.nounService.getNouns().subscribe(incoming_nouns => this.nouns = incoming_nouns);
+    searchNouns(search_term: string): void {
+        if (search_term != '') {
+            this.nounService.searchNoun(search_term)
+                .subscribe(incoming_nouns => {
+                    this.nouns = incoming_nouns
+                });
+        } else {
+            this.nouns = undefined;
+        }
     }
     getNoun(): void {
         // I have no idea what the second argument being based to parseInt is doing.
@@ -47,53 +57,64 @@ export class NounDetailComponent implements OnInit {
         this.nounService.getNoun(id)
             .subscribe(incoming_noun => {
                 this.noun = incoming_noun;
-                console.log(incoming_noun)
                 // Interpreter refuses to let me call this function in ngOnInit for some reason.
-                this.getLanguage(incoming_noun)
+                this.getLanguage(incoming_noun);
+                this.getTranslations(incoming_noun);
             });
     }
     getLanguage(noun: Noun): void {
         this.languageService.getLanguage(noun.language_id)
             .subscribe(incoming_language => {
                 this.language = incoming_language;
-                console.log(incoming_language)
-
             })
     }
     getTranslations(noun: Noun): void {
-        // no point in implementing quite yet. prioritising adding translations so there's something to search.
+        this.translationService.getTranslations(noun)
+            .subscribe(incoming_translations => {
+                this.translations = incoming_translations;
+            })
     }
     addTranslation(): void {
-        if (this.noun && this.newTranslation) {
-            if (this.newTranslations) {
-                this.newTranslations.push(new Translation(
-                    0, // just to make the model happy
-                    this.noun.id,
-                    this.newTranslation.id,
-                    100 // just to make the model happy atm
-                ))
-            } else {
-                this.newTranslations = [new Translation(
-                    0, // just to make the model happy
-                    this.noun.id,
-                    this.newTranslation.id,
-                    100)]
-            }
+        if (this.noun && this.newTranslationID) {
+            // this.newTranslations.push(new Translation(
+            //     0, // just to make the model happy
+            //     this.noun.id,
+            //     parseInt(this.newTranslationID),
+            //     100 // just to make the model happy atm
+            // ));
+            let translation: Translation = new Translation(
+                0,
+                this.noun.id,
+                parseInt(this.newTranslationID),
+                100
+            );
+            this.translationService.insertTranslation(translation).subscribe(_ => {
+                if (this.noun) {
+                    this.getTranslations(this.noun)
+                }
+            })
         }
+        this.search_term = '';
+        this.nouns = undefined;
+    }
+    removeTranslation(translationID: number, nounID: number): void {
+        this.translationService.deleteTranslation(translationID, nounID)
+            .subscribe(_ => {
+                if (this.noun) {
+                    this.getTranslations(this.noun)
+                }
+            });
     }
     save(): void {
         if(this.noun) {
             // discuss the uses for this being a subscription.
-            this.nounService.updateNoun(this.noun)
-                .subscribe(() => this.goBack());
-            if (this.newTranslations) {
-                for (let i = 0; i < this.newTranslations.length; i++) {
-                    this.translationService.insertTranslation(this.newTranslations[i]);
-                }
-            }
+            this.nounService.updateNoun(this.noun).subscribe();
+            this.goBack();
         }
     }
     goBack(): void {
         this.location.back();
     }
+
+    protected readonly onkeydown = onkeydown;
 }
