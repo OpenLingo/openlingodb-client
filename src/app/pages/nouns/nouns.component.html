@@ -1,16 +1,37 @@
-<div class="noun_content">
-    <h2>Nouns</h2>
+<div class="container">
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter by word" #input>
+    </mat-form-field>
 
-    <button class="noun_button" *ngFor="let noun of nouns;" routerLink="/noun-detail/{{noun.id}}">
-        <div class="noun_button_left_align">
-            <p class="noun_button_id">{{noun.id}}</p>
-            <p class="noun_button_word">{{noun["word"]}}</p>
-        </div>
+    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-        <div class="noun_button_right_align">
-            <p class="noun_button_language">{{noun.language_id}}</p>
-        </div>
-    </button>
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">ID</mat-header-cell>
+            <mat-cell *matCellDef="let noun">{{noun.id}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="word">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by word">Word</mat-header-cell>
+            <mat-cell *matCellDef="let noun">{{noun['word']}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="language id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by language">Language id</mat-header-cell>
+            <mat-cell *matCellDef="let noun">{{noun['language_id']}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="gender">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by gender">Gender</mat-header-cell>
+            <mat-cell *matCellDef="let noun">{{noun['gender']}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="level id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by level">Level id</mat-header-cell>
+            <mat-cell *matCellDef="let noun">{{noun['level_id']}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row routerLink="/noun-detail/{{row.id}}" *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
 </div>
-
-

@@ -1,3 +1,51 @@
+<div *ngIf="noun" class="container">
+    <div class="mat-headline-3" style="margin-bottom: 10px;">{{noun.word | titlecase}}</div>
+    <div class="mat-subtitle-1">ID: {{noun.id}}</div>
+
+    <mat-form-field>
+        <mat-label>{{noun['word']}}</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <div class="mat-headline-4" style="margin-bottom: 10px;">Translations</div>
+    <div class="translations-container">
+        <!-- List of translations -->
+        <div class="card-container" *ngFor="let translation of translations">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>{{translation['word']}}</mat-card-title>
+                    <mat-card-subtitle>ID: {{translation['id']}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions align="end">
+                    <button mat-button>Edit</button>
+                    <button mat-button>Delete</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <!-- Form to add a new translation -->
+        <div class="form-container">
+            <div class="mat-headline-5" style="margin-bottom: 10px;">Add a new translation:</div>
+            <form>
+                <mat-form-field>
+                    <mat-label>Word</mat-label>
+                    <input type="text"
+                           placeholder="Please choose a word"
+                           aria-label="Search for a Word"
+                           matInput
+                           (input)="filterNouns()"
+                           [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let noun of nouns" [value]="noun['word']">
+                            {{noun['word']}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div *ngIf="noun" style="padding: 1rem;">
     <h2>{{noun.word | titlecase}} Details</h2>
     <div><span>id: </span>{{noun.id}}</div>

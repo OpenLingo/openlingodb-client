@@ -7,6 +7,8 @@ import { Language } from "../../models/language.model";
 import { LanguageService } from "../../services/language.service";
 import { Translation } from "../../models/translation.model";
 import { TranslationService } from "../../services/translation.service";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {filter, map, Observable, startWith} from "rxjs";
 
 @Component({
     selector: 'app-noun-detail',
@@ -15,6 +17,8 @@ import { TranslationService } from "../../services/translation.service";
 })
 
 export class NounDetailComponent implements OnInit {
+    myControl = new FormControl <string | Noun>('');
+
     noun: Noun | undefined; // ask about variables in typescript.
     nouns: Noun[] | undefined;
 
@@ -24,9 +28,6 @@ export class NounDetailComponent implements OnInit {
 
     translations: Translation[] | undefined;
     newTranslationID: string = '';
-    newTranslations: Translation[] = [];
-
-
 
     constructor(
         private route: ActivatedRoute,
@@ -35,9 +36,11 @@ export class NounDetailComponent implements OnInit {
         private translationService: TranslationService,
         private location: Location
     ){}
-
     ngOnInit(): void {
         this.getNoun();
+    }
+    filterNouns(): void {
+        this.searchNouns(this.myControl.value as string);
     }
     searchNouns(search_term: string): void {
         if (search_term != '') {
@@ -116,5 +119,5 @@ export class NounDetailComponent implements OnInit {
         this.location.back();
     }
 
-    protected readonly onkeydown = onkeydown;
+    protected readonly filter = filter;
 }

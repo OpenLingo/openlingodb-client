@@ -1,39 +1,46 @@
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
+import { MaterialModule } from "./material/material.module";
 
+import { AddNounComponent } from './pages/add-noun/add-noun.component';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 import { NounsComponent } from './pages/nouns/nouns.component';
 import { NounDetailComponent } from './pages/noun-detail/noun-detail.component';
-import { MessagesComponent } from './pages/messages/messages.component';
-import { AppRoutingModule } from './app-routing.module';
-import { NavbarComponent } from './pages/navbar/navbar.component';
-import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { AddNounComponent } from './pages/add-noun/add-noun.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToolbarComponent } from './pages/toolbar/toolbar.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NounsComponent,
-    NounDetailComponent,
-    MessagesComponent,
-    NavbarComponent,
-    LoginComponent,
-    RegisterComponent,
-    AddNounComponent
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NounsComponent,
+        NounDetailComponent,
+        MessagesComponent,
+        LoginComponent,
+        RegisterComponent,
+        AddNounComponent,
+        HomeComponent,
+        ToolbarComponent
+    ],
+    imports: [
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        MaterialModule,
+        ReactiveFormsModule,
+    ],
+    providers: [],
+    bootstrap: [
+        AppComponent
+    ]
 })
 
 export class AppModule { }
