@@ -2,6 +2,10 @@
 .container {
     padding: 10px;
 }
+.definitions-container {
+    display: grid;
+    grid-column-gap: 30px;
+}
 .translations-container {
     display: grid;
     grid-column-gap: 30px;
@@ -10,13 +14,17 @@
     grid-column: 1;
 }
 .card-container > * {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .form-container {
     grid-column: 2;
-    grid-row: 1 / -1;
+    grid-row: 1 / span 3;
 }
-
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
 mat-card-title {
     color: #fff
 }

@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Noun } from '../../models/noun.model';
 import { ActivatedRoute } from '@angular/router';
+import { filter } from "rxjs";
+import { FormControl } from "@angular/forms";
 import { Location } from '@angular/common';
-import { NounService } from '../../services/noun.service';
+
+import { Definition } from "../../models/definition.model";
+import { Dialect } from "../../models/dialect.model";
 import { Language } from "../../models/language.model";
-import { LanguageService } from "../../services/language.service";
+import { Noun } from '../../models/noun.model';
 import { Translation } from "../../models/translation.model";
+
+import { DefinitionService } from "../../services/definition.service";
+import { DialectService } from "../../services/dialect.service";
+import { NounService } from '../../services/noun.service';
+import { LanguageService } from "../../services/language.service";
 import { TranslationService } from "../../services/translation.service";
-import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {filter, map, Observable, startWith} from "rxjs";
 
 @Component({
     selector: 'app-noun-detail',
@@ -17,30 +23,40 @@ import {filter, map, Observable, startWith} from "rxjs";
 })
 
 export class NounDetailComponent implements OnInit {
-    myControl = new FormControl <string | Noun>('');
 
+    // Variables related to the selected noun
     noun: Noun | undefined; // ask about variables in typescript.
-    nouns: Noun[] | undefined;
+    nouns: Noun[] | undefined
+    translations: Translation[] | undefined;
 
+    // variables related to translations
     language: Language | undefined;
-
+    languages: Language[] | undefined;
+    newTranslationID: number | undefined;
+    nounSearchFormControl = new FormControl <string | Noun>('');
     search_term: string = '';
 
-    translations: Translation[] | undefined;
-    newTranslationID: string = '';
+    // variables related to definitions
+    definition_form_control = new FormControl <number[] | undefined>(undefined);
+    definition_text_form_control = new FormControl <string>('');
+    definitions: Definition[] | undefined;
+    dialects: Dialect[] | undefined;
 
     constructor(
         private route: ActivatedRoute,
-        public nounService: NounService,
+        private location: Location,
+        private definitionService: DefinitionService,
+        private dialectService: DialectService,
         private languageService: LanguageService,
+        public nounService: NounService,
         private translationService: TranslationService,
-        private location: Location
     ){}
     ngOnInit(): void {
         this.getNoun();
+        this.getLanguages();
     }
     filterNouns(): void {
-        this.searchNouns(this.myControl.value as string);
+        this.searchNouns(this.nounSearchFormControl.value as string);
     }
     searchNouns(search_term: string): void {
         if (search_term != '') {
@@ -63,6 +79,8 @@ export class NounDetailComponent implements OnInit {
                 // Interpreter refuses to let me call this function in ngOnInit for some reason.
                 this.getLanguage(incoming_noun);
                 this.getTranslations(incoming_noun);
+                this.getDefinitions(incoming_noun);
+                this.getDialects(incoming_noun);
             });
     }
     getLanguage(noun: Noun): void {
@@ -70,6 +88,11 @@ export class NounDetailComponent implements OnInit {
             .subscribe(incoming_language => {
                 this.language = incoming_language;
             })
+    }
+    getLanguages(): void {
+        this.languageService.getLanguages().subscribe(incoming_languages => {
+            this.languages = incoming_languages;
+        })
     }
     getTranslations(noun: Noun): void {
         this.translationService.getTranslations(noun)
@@ -79,16 +102,10 @@ export class NounDetailComponent implements OnInit {
     }
     addTranslation(): void {
         if (this.noun && this.newTranslationID) {
-            // this.newTranslations.push(new Translation(
-            //     0, // just to make the model happy
-            //     this.noun.id,
-            //     parseInt(this.newTranslationID),
-            //     100 // just to make the model happy atm
-            // ));
             let translation: Translation = new Translation(
                 0,
                 this.noun.id,
-                parseInt(this.newTranslationID),
+                this.newTranslationID,
                 100
             );
             this.translationService.insertTranslation(translation).subscribe(_ => {
@@ -108,16 +125,44 @@ export class NounDetailComponent implements OnInit {
                 }
             });
     }
-    save(): void {
-        if(this.noun) {
-            // discuss the uses for this being a subscription.
-            this.nounService.updateNoun(this.noun).subscribe();
-            this.goBack();
+    addDefinition(): void {
+        let definition_dialects: number[];
+
+        if (this.definition_form_control.value) {
+            definition_dialects = this.definition_form_control.value;
+        } else {
+            return
+        }
+
+        if (this.definition_text_form_control.value && this.definition_text_form_control.value != '') {
+            let definition_text = this.definition_text_form_control.value;
+            definition_dialects.forEach(dialect_id => {
+                this.definitionService.insertDefinition(
+                    new Definition(0, dialect_id, this.noun?.id, definition_text)
+                ).subscribe(_ => {
+                    if (this.noun) {
+                        this.getDefinitions(this.noun)
+                    }
+                });
+            });
         }
     }
-    goBack(): void {
-        this.location.back();
+    getDefinitions(noun: Noun): void {
+        this.definitionService.getDefinitions(noun.id).subscribe(incoming_definitions => {
+            this.definitions = incoming_definitions;
+            console.log(incoming_definitions)
+        });
     }
-
-    protected readonly filter = filter;
+    getDialects(noun: Noun): void {
+        this.dialectService.getDialectsByLanguage(noun.language_id).subscribe(incoming_dialects => {
+            this.dialects = incoming_dialects;
+        })
+    }
+    getDialect(dialect_id: number): Dialect {
+        let dialect: Dialect = new Dialect();
+        this.dialectService.getDialectByID(dialect_id).subscribe(incoming_dialect => {
+            dialect = incoming_dialect
+        });
+        return dialect;
+    }
 }
