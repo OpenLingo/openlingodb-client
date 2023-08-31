@@ -37,6 +37,7 @@ export class NounsComponent implements OnInit, AfterViewInit {
     }
     applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
+        console.log(this.dataSource.data)
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 }

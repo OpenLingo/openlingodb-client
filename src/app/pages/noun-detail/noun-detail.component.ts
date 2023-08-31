@@ -150,7 +150,6 @@ export class NounDetailComponent implements OnInit {
     getDefinitions(noun: Noun): void {
         this.definitionService.getDefinitions(noun.id).subscribe(incoming_definitions => {
             this.definitions = incoming_definitions;
-            console.log(incoming_definitions)
         });
     }
     getDialects(noun: Noun): void {
