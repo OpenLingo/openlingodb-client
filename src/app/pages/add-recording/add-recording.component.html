@@ -1,0 +1,23 @@
+<div class="add-recording-container">
+    <div class="mat-headline-3" style="margin-bottom: 10px;">Add a Recording</div>
+    <button id="start" mat-raised-button>
+        <mat-icon>mic</mat-icon>Record
+    </button>
+    <button id="stop" mat-raised-button>
+        <mat-icon>stop</mat-icon>Stop
+    </button>
+    <button id="play" mat-raised-button>
+        <mat-icon>play_arrow</mat-icon>Play
+    </button>
+    <button id="download" mat-raised-button>
+        <mat-icon>download</mat-icon>Download
+    </button>
+
+    <div class="mat-headline-4" style="margin-bottom: 10px;">Devices</div>
+    <ul>
+        <li *ngFor="let input of inputs">{{input.label}}</li>
+        <li *ngIf="!inputs.length">No audio devices found</li>
+    </ul>
+
+    <source id="audio_src">
+</div>

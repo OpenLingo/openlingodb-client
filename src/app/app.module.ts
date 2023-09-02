@@ -15,6 +15,7 @@ import { NounsComponent } from './pages/nouns/nouns.component';
 import { NounDetailComponent } from './pages/noun-detail/noun-detail.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ToolbarComponent } from './pages/toolbar/toolbar.component';
+import { AddRecordingComponent } from './pages/add-recording/add-recording.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { ToolbarComponent } from './pages/toolbar/toolbar.component';
         RegisterComponent,
         AddNounComponent,
         HomeComponent,
-        ToolbarComponent
+        ToolbarComponent,
+        AddRecordingComponent,
     ],
     imports: [
         AppRoutingModule,
