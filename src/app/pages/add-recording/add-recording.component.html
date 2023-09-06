@@ -1,15 +1,15 @@
 <div class="add-recording-container">
     <div class="mat-headline-3" style="margin-bottom: 10px;">Add a Recording</div>
-    <button id="start" mat-raised-button>
+    <button id="start" mat-raised-button (click)="start()">
         <mat-icon>mic</mat-icon>Record
     </button>
-    <button id="stop" mat-raised-button>
+    <button id="stop" mat-raised-button (click)="stop()">
         <mat-icon>stop</mat-icon>Stop
     </button>
-    <button id="play" mat-raised-button>
+    <button id="play" mat-raised-button (click)="play()">
         <mat-icon>play_arrow</mat-icon>Play
     </button>
-    <button id="download" mat-raised-button>
+    <button id="download" mat-raised-button (click)="download()">
         <mat-icon>download</mat-icon>Download
     </button>
 
