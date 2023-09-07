@@ -1,27 +1,43 @@
 <div class="add-noun-container">
-    <!-- Noun text entry -->
-    <label for="word">Please enter the noun you would like to add:</label>
-    <input [(ngModel)]="word" id="word">
 
-    <!-- Drop down menu to select from the list of languages currently maintained in the database. -->
-    <label for="language">Please choose what language your noun belongs to:</label>
-    <select [(ngModel)]="language" name="languages" id="language">
-        <option value="" selected hidden>Please choose a language...</option>
-        <option *ngFor="let lang of languages;" [ngValue]="lang">{{lang.title}}</option>
-    </select>
+    <div class="mat-headline-2" style="margin-bottom: 10px;">Add a Noun</div>
 
-    <!-- Drop down menu to select from the list of genders associated with the language
-         selected by the user. Does not render if the currently selected language is
-          un-gendered, or if there is no currently selected language. -->
-    <div *ngIf="language && language.is_gendered" style="display: flex; flex-direction: column;">
-        <label for="gender">Please choose the gender of your noun:</label>
-        <select [(ngModel)]="gender" name="gender" id="gender">
-            <option value="m">Masculine</option>
-            <option value="f">Feminine</option>
-            <option value="n">Neuter</option>
-        </select>
+    <div class="mat-headline-4" style="margin-bottom: 10px;">
+        Basic details:
     </div>
+    <form class="add-noun-form">
 
-    <button (click)="save()">Save</button>
+        <mat-form-field class="form-field-full-width">
+            <mat-label>Word</mat-label>
+            <input matInput type="text" [(ngModel)]="word" name="word">
+            <button *ngIf="word" matSuffix mat-icon-button aria-label="Clear" (click)="word = ''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field class="form-field-full-width">
+            <mat-label>Language</mat-label>
+            <mat-select [(value)]="language">
+                <mat-option *ngFor="let language of languages" [value]="language">
+                    {{language['title']}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form-field-full-width" *ngIf="language && language.is_gendered">
+            <mat-label>Gender</mat-label>
+            <mat-select [(value)]="gender">
+                <mat-option *ngFor="let gender of genders" [value]="gender.symbol">
+                    {{gender.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="mat-headline-4" style="margin-bottom: 10px;">
+            Would you like to add a translation or definition?
+        </div>
+        <!-- Insert an autocomplete input and a definition entry here. -->
+        <button mat-raised-button class="form-field-button" color="accent" (click)="save()">Save</button>
+    </form>
 </div>
 

@@ -23,6 +23,9 @@ export class NounsComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.getNouns();
+        this.dataSource.filterPredicate = function (record, filter) {
+            return record.word.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase());
+        }
     }
     ngAfterViewInit(): void {
         this.dataSource.sort = this.sort;
@@ -37,7 +40,6 @@ export class NounsComponent implements OnInit, AfterViewInit {
     }
     applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
-        console.log(this.dataSource.data)
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 }

@@ -12,10 +12,15 @@ import { Location } from "@angular/common";
 })
 
 export class AddNounComponent implements OnInit {
-    languages: Language[] = [];
-    gender: string | undefined;
-    language: Language | undefined;
-    word: string | undefined;
+    languages: Language[] | null = null;
+    language: Language | null = null;
+    gender: string | null = null;
+    genders = [
+        {title: 'Masculine', symbol: 'm'},
+        {title: 'Feminine', symbol: 'f'},
+        {title: 'Neuter', symbol: 'n'}
+    ];
+    word: string | null = null;
 
     constructor(
         private languageService : LanguageService,
@@ -27,31 +32,26 @@ export class AddNounComponent implements OnInit {
         this.languageService.getLanguages()
             .subscribe(incoming_languages => this.languages = incoming_languages)
     }
-
     save() : void {
-        let noun: Noun | undefined
+        let noun: Noun | null = null
 
-        if (this.word && this.language) {
-            if (this.language.is_gendered && this.gender) {
-                noun = {
-                    id: 0, // This is just to make the model happy. The server won't even look at this value.
-                    language_id: this.language.id,
-                    level_id: 0, // Also just to make the model happy
-                    gender: this.gender,
-                    word: this.word
-                }
-            } else {
-                noun = {
-                    id: 0, // This is just to make the model happy. The server won't even look at this value.
-                    language_id: this.language.id,
-                    level_id: 0, // Also just to make the model happy
-                    gender: 'NULL',
-                    word: this.word
-                }
-            }
-            this.nounService.insertNoun(noun)
-                .subscribe(() => this.goBack())
+        if (!this.word || !this.language) {
+            console.log("Empty fields");
+            return
         }
+        if (this.language?.is_gendered && !this.gender) {
+            console.log("Gender required for gendered languages.");
+            return
+        }
+        noun = {
+            id: 0,
+            language_id: this.language.id,
+            level_id: null,
+            gender: this.gender,
+            word: this.word
+        }
+        this.nounService.insertNoun(noun)
+            .subscribe(() => this.goBack());
     }
     goBack(): void {
         this.location.back();

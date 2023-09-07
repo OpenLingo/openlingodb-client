@@ -4,8 +4,8 @@ export class Noun {
     constructor(
         public id: number = 0,
         public language_id: number = 0,
-        public level_id: number = 0,
-        public gender: string = '',
+        public level_id: number | null = null,
+        public gender: string | null = null,
         public word: string = ''
     ) {}
 
