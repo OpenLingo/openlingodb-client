@@ -3,10 +3,9 @@
     <div class="mat-headline-2" style="margin-bottom: 10px;">Add a Noun</div>
 
     <div class="mat-headline-4" style="margin-bottom: 10px;">
-        Basic details:
+        Details:
     </div>
-    <form class="add-noun-form">
-
+    <form class="details">
         <mat-form-field class="form-field-full-width">
             <mat-label>Word</mat-label>
             <input matInput type="text" [(ngModel)]="word" name="word">
@@ -27,7 +26,7 @@
         <mat-form-field class="form-field-full-width" *ngIf="language && language.is_gendered">
             <mat-label>Gender</mat-label>
             <mat-select [(value)]="gender">
-                <mat-option *ngFor="let gender of genders" [value]="gender.symbol">
+                <mat-option *ngFor="let gender of GENDERS" [value]="gender.symbol">
                     {{gender.title}}
                 </mat-option>
             </mat-select>
@@ -35,9 +34,29 @@
 
         <div class="mat-headline-4" style="margin-bottom: 10px;">
             Would you like to add a translation or definition?
+            <mat-form-field class="form-field-full-width">
+                <input type="text"
+                       placeholder="Add a translation..."
+                       aria-label="Search for a Word"
+                       matInput
+                       (input)="filterNouns()"
+                       [formControl]="translationFormControl"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let noun of nouns"
+                                [value]="noun['word']"
+                                (click)="pushTranslation(noun)">
+                        {{noun['word']}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="form-field-full-width">
+                <textarea matInput placeholder="Add a definition..."></textarea>
+            </mat-form-field>
+            <!-- Insert an autocomplete input and a definition entry here. -->
+            <button mat-raised-button class="form-field-button" color="accent" (click)="save()">Save</button>
+            <button mat-raised-button class="form-field-button" color="primary" (click)="debug()">Debug</button>
         </div>
-        <!-- Insert an autocomplete input and a definition entry here. -->
-        <button mat-raised-button class="form-field-button" color="accent" (click)="save()">Save</button>
     </form>
 </div>
 

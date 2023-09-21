@@ -4,6 +4,7 @@ import { Language} from "../../models/language.model";
 import { NounService } from "../../services/noun.service";
 import { LanguageService } from "../../services/language.service";
 import { Location } from "@angular/common";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-add-noun',
@@ -12,15 +13,24 @@ import { Location } from "@angular/common";
 })
 
 export class AddNounComponent implements OnInit {
-    languages: Language[] | null = null;
-    language: Language | null = null;
-    gender: string | null = null;
-    genders = [
+
+    GENDERS = [
         {title: 'Masculine', symbol: 'm'},
         {title: 'Feminine', symbol: 'f'},
         {title: 'Neuter', symbol: 'n'}
     ];
+
+    languages: Language[] | null = null;
+    language: Language | null = null;
+    gender: string | null = null;
     word: string | null = null;
+
+
+    nouns: Noun[] | null = null;
+    translations: Noun[] = [];
+    searchTerm: string | null = null;
+
+    translationFormControl = new FormControl <string>('');
 
     constructor(
         private languageService : LanguageService,
@@ -32,9 +42,23 @@ export class AddNounComponent implements OnInit {
         this.languageService.getLanguages()
             .subscribe(incoming_languages => this.languages = incoming_languages)
     }
-    save() : void {
-        let noun: Noun | null = null
-
+    filterNouns(): void {
+        if (this.translationFormControl.value == '') {
+            this.nouns = null;
+            return;
+        }
+        this.nounService.searchNoun(this.translationFormControl.value!)
+            .subscribe(incomingNouns => this.nouns = incomingNouns);
+    }
+    pushTranslation(noun: Noun): void {
+        for (let i: number = 0; i < this.translations.length; i++) {
+            if (noun.id == this.translations[i].id) {
+                return;
+            }
+        }
+        this.translations.push(noun);
+    }
+    save(): void {
         if (!this.word || !this.language) {
             console.log("Empty fields");
             return
@@ -43,17 +67,14 @@ export class AddNounComponent implements OnInit {
             console.log("Gender required for gendered languages.");
             return
         }
-        noun = {
-            id: 0,
-            language_id: this.language.id,
-            level_id: null,
-            gender: this.gender,
-            word: this.word
-        }
+        let noun: Noun = new Noun(0, this.language.id, null, this.gender, this.word);
         this.nounService.insertNoun(noun)
             .subscribe(() => this.goBack());
     }
     goBack(): void {
         this.location.back();
+    }
+    debug(): void { // Print stuff to console here
+
     }
 }

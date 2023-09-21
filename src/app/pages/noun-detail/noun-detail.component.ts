@@ -71,12 +71,12 @@ export class NounDetailComponent implements OnInit {
     getNoun(): void {
         // I have no idea what the second argument being based to parseInt is doing.
         // could be the base or smth but idk.
-        const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+        const id = +this.route.snapshot.paramMap.get('id')!;
 
         this.nounService.getNoun(id)
             .subscribe(incoming_noun => {
                 this.noun = incoming_noun;
-                // Interpreter refuses to let me call this function in ngOnInit for some reason.
+                // Interpreter refuses to let me call these function in ngOnInit for some reason.
                 this.getLanguage(incoming_noun);
                 this.getTranslations(incoming_noun);
                 this.getDefinitions(incoming_noun);
