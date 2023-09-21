@@ -1,14 +1,16 @@
 .add-noun-container {
     margin: 10px;
-    display: flex;
-    flex-direction: column;
-}
-.details{
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
 }
 .form-field-full-width {
-    width:100%;
+    width: 100%;
+}
+table{
+    table-layout: fixed;
+}
+th, td {
+    min-width: 150px;
+    max-width: 500px;
+    padding: 10px;
+    vertical-align: top;
 }
 

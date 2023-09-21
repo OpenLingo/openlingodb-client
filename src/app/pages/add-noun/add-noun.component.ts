@@ -28,9 +28,9 @@ export class AddNounComponent implements OnInit {
 
     nouns: Noun[] | null = null;
     translations: Noun[] = [];
-    searchTerm: string | null = null;
 
     translationFormControl = new FormControl <string>('');
+    disableGenderSelect: boolean = true;
 
     constructor(
         private languageService : LanguageService,
