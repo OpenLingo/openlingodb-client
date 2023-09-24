@@ -38,6 +38,15 @@ export class DefinitionService {
                 catchError(this.handleError<Noun>(`insertDefinition noun id=${definition.noun_id}`))
             )
     }
+    deleteDefinition(definitionID: number): Observable<any> {
+        return this.http.put(`${this.definitionsUrl}/delete`, definitionID, this.httpOptions)
+            .pipe(
+                tap(_ => this.log(
+                    `Deleted definition having ID = ${definitionID}`
+                )),
+                catchError(this.handleError<Noun>(`deleteDefinition definition id=${definitionID}`))
+            )
+    }
     private log(message: string) {
         this.messageService.add(`DefinitionService: ${message}`);
     }

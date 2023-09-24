@@ -8,79 +8,84 @@
     </mat-form-field>
 
     <!-- Definitions -->
-    <div class="mat-headline-4" style="margin-bottom: 10px;">Definitions</div>
-    <div class="definitions-container">
-        <div class="card-container" *ngFor="let definition of definitions">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>{{definition['text']}}</mat-card-title>
-                    <mat-card-subtitle>dialects: {{definition['dialect_id']}}</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-actions align="end">
-                    <button mat-button>Edit</button>
-                    <button mat-button>Delete</button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        <div class="form-container">
-            <div class="mat-headline-5" style="margin-bottom: 10px;">Add a new definition:</div>
-            <form>
-                <mat-form-field>
-                    <mat-label>Select the dialects this definition applies to:</mat-label>
-                    <mat-select [formControl]="definition_form_control" multiple>
-                        <mat-option *ngFor="let dialect of dialects"
-                                    value="{{dialect.id}}" >{{dialect.title}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Type a definition here.</mat-label>
-                    <textarea matInput class="definition-text-area" [formControl]="definition_text_form_control"></textarea>
-                </mat-form-field>
-            </form>
-            <button mat-raised-button color="primary" (click)="addDefinition();">Add</button>
-        </div>
-    </div>
+    <table>
+        <tr>
+            <th><div class="mat-headline-4" style="margin-bottom: 10px;">Definitions</div></th>
+            <th><div class="mat-headline-5" style="margin-bottom: 10px;">Add a new definition:</div></th>
+        </tr>
+        <tr>
+            <td><div class="card-container" *ngFor="let definition of definitions">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{definition['text']}}</mat-card-title>
+                        <mat-card-subtitle>dialects: {{definition['dialect_id']}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-actions align="end">
+                        <button mat-button (click)="removeDefinition(definition.id)">Delete</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div></td>
+            <td><div class="form-container">
+                <form>
+                    <mat-form-field>
+                        <mat-label>Select the dialects this definition applies to:</mat-label>
+                        <mat-select [formControl]="definition_form_control" multiple>
+                            <mat-option *ngFor="let dialect of dialects"
+                                        value="{{dialect.id}}" >{{dialect.title}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Type a definition here.</mat-label>
+                        <textarea matInput class="definition-text-area" [formControl]="definition_text_form_control"></textarea>
+                    </mat-form-field>
+                </form>
+                <button mat-raised-button color="primary" (click)="addDefinition()">Add</button>
+                <button mat-raised-button color="accent">Clear</button>
+            </div></td>
+        </tr>
+    </table>
 
     <!-- Translations -->
-    <div class="mat-headline-4" style="margin-bottom: 10px;">Translations</div>
-    <div class="translations-container">
-        <!-- List of translations -->
-        <div class="card-container" *ngFor="let translation of translations">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>{{translation['word']}}</mat-card-title>
-                    <mat-card-subtitle>ID: {{translation['id']}}</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-actions align="end">
-                    <button mat-button>Edit</button>
-                    <button mat-button (click)="removeTranslation(translation['id'], noun['id'])">Delete</button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        <!-- Form to add a new translation -->
-        <div class="form-container">
-            <div class="mat-headline-5" style="margin-bottom: 10px;">Add a new translation:</div>
-            <form>
-                <mat-form-field>
-                    <mat-label>Word</mat-label>
-                    <input type="text"
-                           placeholder="Please choose a word"
-                           aria-label="Search for a Word"
-                           matInput
-                           (input)="filterNouns()"
-                           [formControl]="nounSearchFormControl"
-                           [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let noun of nouns"
-                                    [value]="noun['word']"
-                                    (click)="newTranslationID = noun['id']">
-                            {{noun['word']}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </form>
-            <button mat-raised-button color="primary" (click)="addTranslation();">Add</button>
-        </div>
-    </div>
+    <table>
+        <tr>
+            <th><div class="mat-headline-4" style="margin-bottom: 10px;">Translations</div></th>
+            <th><div class="mat-headline-5" style="margin-bottom: 10px;">Add a new translation:</div></th>
+        </tr>
+        <tr>
+            <td><div class="card-container" *ngFor="let translation of translations">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{translation['word']}}</mat-card-title>
+                        <mat-card-subtitle>ID: {{translation['id']}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-actions align="end">
+                        <button mat-button (click)="removeTranslation(translation['id'], noun['id'])">Delete</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div></td>
+            <td><div class="form-container">
+                <form>
+                    <mat-form-field>
+                        <mat-label>Word</mat-label>
+                        <input type="text"
+                               placeholder="Please choose a word"
+                               aria-label="Search for a Word"
+                               matInput
+                               (input)="filterNouns()"
+                               [formControl]="nounSearchFormControl"
+                               [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let noun of nouns"
+                                        [value]="noun['word']"
+                                        (click)="newTranslationID = noun['id']">
+                                {{noun['word']}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+                <button mat-raised-button color="primary" (click)="addTranslation();">Add</button>
+            </div></td>
+        </tr>
+    </table>
 </div>
 

@@ -1,6 +1,15 @@
 /* NounDetailComponent's private CSS styles */
 .container {
-    padding: 10px;
+    margin: 10px;
+}
+table {
+    width: 80%;
+}
+th, td {
+    width: 45%;
+    padding-right: 10px;
+    text-align: left;
+    vertical-align: top;
 }
 .definitions-container {
     display: grid;

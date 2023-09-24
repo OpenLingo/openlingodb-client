@@ -58,6 +58,16 @@ export class AddNounComponent implements OnInit {
         }
         this.translations.push(noun);
     }
+    checkGender(): void {
+        if (!this.language) {
+            return;
+        }
+        if (!this.language.is_gendered) {
+            this.disableGenderSelect = true;
+            return;
+        }
+        this.disableGenderSelect = false;
+    }
     save(): void {
         if (!this.word || !this.language) {
             console.log("Empty fields");

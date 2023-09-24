@@ -9,11 +9,11 @@
                 Details:
                 </div>
             </th>
-            <th colspan="2">
-                <div class="mat-headline-4" style="margin-bottom: 10px;">
-                    Would you like to add a definition or translation?
-                </div>
-            </th>
+<!--            <th colspan="2">-->
+<!--                <div class="mat-headline-4" style="margin-bottom: 10px;">-->
+<!--                    Would you like to add a definition or translation?-->
+<!--                </div>-->
+<!--            </th>-->
         </tr>
         <tr>
             <td>
@@ -28,48 +28,49 @@
                 <mat-form-field class="form-field-full-width">
                     <mat-label>Language</mat-label>
                     <mat-select [(value)]="language">
-                        <mat-option *ngFor="let language of languages" [value]="language">
+                        <mat-option *ngFor="let language of languages"
+                                    [value]="language"
+                                    (click)="checkGender()">
                             {{language['title']}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="form-field-full-width" *ngIf="language && language.is_gendered">
+                <mat-form-field class="form-field-full-width">
                     <mat-label>Gender</mat-label>
-                    <mat-select [(value)]="gender">
+                    <mat-select [(value)]="gender" [disabled]="disableGenderSelect">
                         <mat-option *ngFor="let gender of GENDERS" [value]="gender.symbol">
                             {{gender.title}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </td>
-            <td>
-                <mat-form-field class="form-field-full-width">
-                    <textarea matInput placeholder="Add a definition..."></textarea>
-                </mat-form-field>
-            </td>
-            <td>
-                <mat-form-field class="form-field-full-width">
-                    <input type="text"
-                           placeholder="Add a translation..."
-                           aria-label="Search for a Word"
-                           matInput
-                           (input)="filterNouns()"
-                           [formControl]="translationFormControl"
-                           [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let noun of nouns"
-                                    [value]="noun['word']"
-                                    (click)="pushTranslation(noun)">
-                            {{noun['word']}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-                <p *ngFor="let translation of translations">{{translation.word}}</p>
-            </td>
+<!--            <td>-->
+<!--                <mat-form-field class="form-field-full-width">-->
+<!--                    <textarea matInput placeholder="Add a definition..."></textarea>-->
+<!--                </mat-form-field>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <mat-form-field class="form-field-full-width">-->
+<!--                    <input type="text"-->
+<!--                           placeholder="Add a translation..."-->
+<!--                           aria-label="Search for a Word"-->
+<!--                           matInput-->
+<!--                           (input)="filterNouns()"-->
+<!--                           [formControl]="translationFormControl"-->
+<!--                           [matAutocomplete]="auto">-->
+<!--                    <mat-autocomplete #auto="matAutocomplete">-->
+<!--                        <mat-option *ngFor="let noun of nouns"-->
+<!--                                    [value]="noun['word']"-->
+<!--                                    (click)="pushTranslation(noun)">-->
+<!--                            {{noun['word']}}-->
+<!--                        </mat-option>-->
+<!--                    </mat-autocomplete>-->
+<!--                </mat-form-field>-->
+<!--                <p *ngFor="let translation of translations">{{translation.word}}</p>-->
+<!--            </td>-->
         </tr>
     </table>
     <button mat-raised-button class="form-field-button" color="accent" (click)="save()">Save</button>
-    <button mat-raised-button class="form-field-button" color="primary" (click)="debug()">Debug</button>
+<!--    <button mat-raised-button class="form-field-button" color="primary" (click)="debug()">Debug</button>-->
 </div>
-

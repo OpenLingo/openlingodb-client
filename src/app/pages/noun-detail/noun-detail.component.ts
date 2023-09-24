@@ -25,9 +25,9 @@ import { TranslationService } from "../../services/translation.service";
 export class NounDetailComponent implements OnInit {
 
     // Variables related to the selected noun
-    noun: Noun | undefined; // ask about variables in typescript.
+    noun: Noun | null = null; // ask about variables in typescript.
     nouns: Noun[] | undefined
-    translations: Translation[] | undefined;
+    translations: Translation[] | null = null;
 
     // variables related to translations
     language: Language | undefined;
@@ -37,7 +37,7 @@ export class NounDetailComponent implements OnInit {
     search_term: string = '';
 
     // variables related to definitions
-    definition_form_control = new FormControl <number[] | undefined>(undefined);
+    definition_form_control = new FormControl <number[] | null>(null);
     definition_text_form_control = new FormControl <string>('');
     definitions: Definition[] | undefined;
     dialects: Dialect[] | undefined;
@@ -69,8 +69,6 @@ export class NounDetailComponent implements OnInit {
         }
     }
     getNoun(): void {
-        // I have no idea what the second argument being based to parseInt is doing.
-        // could be the base or smth but idk.
         const id = +this.route.snapshot.paramMap.get('id')!;
 
         this.nounService.getNoun(id)
@@ -117,11 +115,11 @@ export class NounDetailComponent implements OnInit {
         this.search_term = '';
         this.nouns = undefined;
     }
-    removeTranslation(translationID: number, nounID: number): void {
-        this.translationService.deleteTranslation(translationID, nounID)
+    removeTranslation(translationID?: number, nounID?: number): void {
+        this.translationService.deleteTranslation(translationID!, nounID!)
             .subscribe(_ => {
                 if (this.noun) {
-                    this.getTranslations(this.noun)
+                    this.getTranslations(this.noun);
                 }
             });
     }
@@ -131,9 +129,8 @@ export class NounDetailComponent implements OnInit {
         if (this.definition_form_control.value) {
             definition_dialects = this.definition_form_control.value;
         } else {
-            return
+            return;
         }
-
         if (this.definition_text_form_control.value && this.definition_text_form_control.value != '') {
             let definition_text = this.definition_text_form_control.value;
             definition_dialects.forEach(dialect_id => {
@@ -146,6 +143,15 @@ export class NounDetailComponent implements OnInit {
                 });
             });
         }
+    }
+    removeDefinition(definitionID: number): void {
+        this.definitionService.deleteDefinition(definitionID)
+            .subscribe(_ => {
+                if (this.noun) {
+                    this.getDefinitions(this.noun);
+                }
+            })
+
     }
     getDefinitions(noun: Noun): void {
         this.definitionService.getDefinitions(noun.id).subscribe(incoming_definitions => {
