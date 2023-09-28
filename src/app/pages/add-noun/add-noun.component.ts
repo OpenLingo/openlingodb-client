@@ -4,7 +4,7 @@ import { Language} from "../../models/language.model";
 import { NounService } from "../../services/noun.service";
 import { LanguageService } from "../../services/language.service";
 import { Location } from "@angular/common";
-import {FormControl} from "@angular/forms";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-add-noun',

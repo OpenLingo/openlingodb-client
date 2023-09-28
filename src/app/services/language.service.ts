@@ -25,7 +25,7 @@ export class LanguageService {
             .pipe(
                 tap(_ => this.log('fetched languages')),
                 catchError(this.handleError<Language[]>('getLanguages', []))
-            );
+            )
     }
     getLanguage(id: number): Observable<Language> {
         const route = `${this.languagesUrl}/${id}`;

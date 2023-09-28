@@ -1,31 +1,42 @@
 <div class="register-container">
-  <div class="register-content-border">
-    <div class="register-content">
-      <h2>Create an account</h2>
+    <table style="margin-top:10px; width: 100%;">
+        <th><div class="mat-headline-4">Personal Details:</div></th>
+        <th><div class="mat-headline-4">Language Details:</div></th>
 
-      <div class="personal-details">
-        <label for="username">Email: </label>
-        <input id="username">
-        <label for="confirm-username">Confirm Email: </label>
-        <input id="confirm-username">
-
-        <label for="password">Password: </label>
-        <input id="password">
-        <label for="confirm-password">Confirm Password: </label>
-        <input id="confirm-password">
-      </div>
-
-      <div class="language-details">
-        <div class="dropdown">
-          <button class="dropdown-button">Native Language(s)</button>
-          <div class="dropdown-content">
-            <button>English</button>
-            <button>German</button>
-          </div>
-        </div>
-      </div>
-
-      <button class="create-account-button">Create Account</button>
-    </div>
-  </div>
+        <tr>
+            <td><form>
+                <mat-form-field>
+                    <mat-label>email</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>confirm_email</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>password</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>confirm_password</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+            </form></td>
+            <td>
+                <table>
+                    <th><div class="mat-headline-6">What can you speak?</div></th>
+                    <th><div class="mat-headline-6">How proficient are you?</div></th>
+                        <tr *ngFor="let language of languages">
+                            <td><mat-checkbox color="accent">{{language.title}}</mat-checkbox></td>
+                            <td><mat-button-toggle-group [disabled]="">
+                                <mat-button-toggle>bad</mat-button-toggle>
+                                <mat-button-toggle>mid</mat-button-toggle>
+                                <mat-button-toggle>good</mat-button-toggle>
+                                <mat-button-toggle>native</mat-button-toggle>
+                            </mat-button-toggle-group></td>
+                        </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </div>

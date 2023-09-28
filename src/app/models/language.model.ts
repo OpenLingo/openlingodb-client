@@ -1,3 +1,5 @@
+import {Dialect} from "./dialect.model";
+
 export class Language {
     [key: string]: any; // Make the model string indexable, eg  w['surname']
 
@@ -6,6 +8,7 @@ export class Language {
         public code: string = '',
         public title: string = '',
         public is_gendered: boolean = false,
+        public dialects: Dialect | null = null
     ) {}
 
     public static assign(newLanguage: Language) {
