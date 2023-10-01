@@ -14,13 +14,12 @@ import { LanguageService } from "../../services/language.service";
 export class RegisterComponent implements OnInit {
 
     languages: Language[] = [];
+    dialects: any = {};
     user_languages: any = {};
     user_dialects: any = {};
 
-
-    options = this._formBuilder.group({
-        languages: this.user_languages
-    })
+    selected_languages: any;
+    selected_dialects: any;
 
     constructor(
         private languageService: LanguageService,
@@ -31,6 +30,15 @@ export class RegisterComponent implements OnInit {
         this.languageService.getLanguages()
             .subscribe(incoming_languages => {
                 this.languages = incoming_languages
+
+                let selected_language_form_fields: any = {};
+                incoming_languages.forEach(language => {
+                    selected_language_form_fields[language['title']] = false;
+                    this.dialects[language['title']] = language['dialects'];
+                })
+                this.selected_languages = this._formBuilder.group(selected_language_form_fields);
+                console.log(this.selected_languages);
+
                 incoming_languages.forEach(language => {
                     // creates two dictionaries. The first keeps track of what languages a user selects,
                     // and the second keeps track of the dialects they select within a language.
@@ -41,8 +49,6 @@ export class RegisterComponent implements OnInit {
                         this.user_dialects[language['title']][`${dialect['title']}`] = false;
                     });
                 });
-                console.log(this.user_languages)
-                console.log(this.user_dialects)
             });
     }
 

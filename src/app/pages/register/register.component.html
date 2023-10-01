@@ -26,25 +26,31 @@
                 <table>
                     <th><div class="mat-headline-6">What can you speak?</div></th>
                     <th><div class="mat-headline-6">How proficient are you?</div></th>
-                        <tr *ngFor="let language of languages">
+                        <tr>
                             <!-- these line breaks are shit but it looks even worse if you don't put them in -->
-                            <td>
+                            <td><section [formGroup]="selected_languages" style="display: flex; flex-direction: column">
+                                <div class="mat-headline-6">What can you speak?</div>
                                 <mat-checkbox
-                                    color="accent"
-                                    (click)="user_languages[language.title] = !user_languages[language.title];"
-                                    >{{language.title}}</mat-checkbox>
-                            </td>
-
+                                    *ngFor="let language of languages"
+                                    formControlName="{{language['title']}}">{{language['title']}}</mat-checkbox>
+                            </section></td>
+                            <td><section>
+                                <div class="mat-headline-6">What dialect(s) do you know?</div>
+                                <mat-checkbox *ngFor="let dialect of dialects"></mat-checkbox>
+                                <!-- TODO: continue working on the language selection -->
+                            </section></td>
                             <td>
-                                <mat-checkbox></mat-checkbox>
+                                <table>
+                                    <tr>
+                                        <td><mat-button-toggle-group>
+                                            <mat-button-toggle>bad</mat-button-toggle>
+                                            <mat-button-toggle>mid</mat-button-toggle>
+                                            <mat-button-toggle>good</mat-button-toggle>
+                                            <mat-button-toggle>native</mat-button-toggle>
+                                        </mat-button-toggle-group></td>
+                                    </tr>
+                                </table>
                             </td>
-
-                            <td><mat-button-toggle-group [disabled]="!user_languages[language.title]">
-                                <mat-button-toggle>bad</mat-button-toggle>
-                                <mat-button-toggle>mid</mat-button-toggle>
-                                <mat-button-toggle>good</mat-button-toggle>
-                                <mat-button-toggle>native</mat-button-toggle>
-                            </mat-button-toggle-group></td>
                         </tr>
                 </table>
             </td>
