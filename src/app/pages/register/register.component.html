@@ -27,8 +27,19 @@
                     <th><div class="mat-headline-6">What can you speak?</div></th>
                     <th><div class="mat-headline-6">How proficient are you?</div></th>
                         <tr *ngFor="let language of languages">
-                            <td><mat-checkbox color="accent">{{language.title}}</mat-checkbox></td>
-                            <td><mat-button-toggle-group [disabled]="">
+                            <!-- these line breaks are shit but it looks even worse if you don't put them in -->
+                            <td>
+                                <mat-checkbox
+                                    color="accent"
+                                    (click)="user_languages[language.title] = !user_languages[language.title];"
+                                    >{{language.title}}</mat-checkbox>
+                            </td>
+
+                            <td>
+                                <mat-checkbox></mat-checkbox>
+                            </td>
+
+                            <td><mat-button-toggle-group [disabled]="!user_languages[language.title]">
                                 <mat-button-toggle>bad</mat-button-toggle>
                                 <mat-button-toggle>mid</mat-button-toggle>
                                 <mat-button-toggle>good</mat-button-toggle>

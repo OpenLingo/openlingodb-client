@@ -8,7 +8,7 @@ export class Language {
         public code: string = '',
         public title: string = '',
         public is_gendered: boolean = false,
-        public dialects: Dialect | null = null
+        public dialects: Dialect = new Dialect()
     ) {}
 
     public static assign(newLanguage: Language) {
