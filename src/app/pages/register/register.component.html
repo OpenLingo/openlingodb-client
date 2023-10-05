@@ -21,35 +21,143 @@
                     <mat-label>confirm_password</mat-label>
                     <input matInput type="text">
                 </mat-form-field>
+                <button mat-raised-button color="accent" (click)="submit()">Submit</button>
             </form></td>
             <td>
                 <table>
                     <th><div class="mat-headline-6">What can you speak?</div></th>
+                    <th><div class="mat-headline-6">Which Dialects?</div></th>
                     <th><div class="mat-headline-6">How proficient are you?</div></th>
+                    <!-- English section -->
                         <tr>
-                            <!-- these line breaks are shit but it looks even worse if you don't put them in -->
-                            <td><section [formGroup]="selected_languages" style="display: flex; flex-direction: column">
-                                <div class="mat-headline-6">What can you speak?</div>
-                                <mat-checkbox
-                                    *ngFor="let language of languages"
-                                    formControlName="{{language['title']}}">{{language['title']}}</mat-checkbox>
-                            </section></td>
-                            <td><section>
-                                <div class="mat-headline-6">What dialect(s) do you know?</div>
-                                <mat-checkbox *ngFor="let dialect of dialects"></mat-checkbox>
-                                <!-- TODO: continue working on the language selection -->
-                            </section></td>
+                            <td rowspan="4">
+                                <mat-checkbox [formControl]="english_form_control">English</mat-checkbox>
+                            </td>
                             <td>
-                                <table>
-                                    <tr>
-                                        <td><mat-button-toggle-group>
-                                            <mat-button-toggle>bad</mat-button-toggle>
-                                            <mat-button-toggle>mid</mat-button-toggle>
-                                            <mat-button-toggle>good</mat-button-toggle>
-                                            <mat-button-toggle>native</mat-button-toggle>
-                                        </mat-button-toggle-group></td>
-                                    </tr>
-                                </table>
+                                <mat-checkbox [disabled]="!english_form_control.value"
+                                              [formControl]="en_au_form_control">Australian English</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!en_au_form_control.value"
+                                                [formControl]="en_au_proficiency_form_control">
+                                        <mat-option value="Functional">Functional</mat-option>
+                                        <mat-option value="Vocational">Vocational</mat-option>
+                                        <mat-option value="Competent">Competent</mat-option>
+                                        <mat-option value="Proficient">Proficient</mat-option>
+                                        <mat-option value="Superior">Superior</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox [disabled]="!english_form_control.value"
+                                              [formControl]="en_gb_form_control">British English</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!en_gb_form_control.value">
+                                        <mat-option value="Functional">Functional</mat-option>
+                                        <mat-option value="Vocational">Vocational</mat-option>
+                                        <mat-option value="Competent">Competent</mat-option>
+                                        <mat-option value="Proficient">Proficient</mat-option>
+                                        <mat-option value="Superior">Superior</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox [disabled]="!english_form_control.value"
+                                              [formControl]="en_us_form_control">American English</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!en_us_form_control.value">
+                                        <mat-option value="Functional">Functional</mat-option>
+                                        <mat-option value="Vocational">Vocational</mat-option>
+                                        <mat-option value="Competent">Competent</mat-option>
+                                        <mat-option value="Proficient">Proficient</mat-option>
+                                        <mat-option value="Superior">Superior</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox [disabled]="!english_form_control.value"
+                                              [formControl]="en_ca_form_control">Canadian English</mat-checkbox>
+
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!en_ca_form_control.value">
+                                        <mat-option value="Functional">Functional</mat-option>
+                                        <mat-option value="Vocational">Vocational</mat-option>
+                                        <mat-option value="Competent">Competent</mat-option>
+                                        <mat-option value="Proficient">Proficient</mat-option>
+                                        <mat-option value="Superior">Superior</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    <!-- German section -->
+                        <tr>
+                            <td rowspan = 3>
+                                <mat-checkbox [formControl]="german_form_control">German</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-checkbox [disabled]="!german_form_control.value"
+                                              [formControl]="de_de_form_control">High German</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!de_de_form_control.value">
+                                        <mat-option value="Beginner">Beginner</mat-option>
+                                        <mat-option value="Elementary">Elementary</mat-option>
+                                        <mat-option value="Intermediate">Intermediate</mat-option>
+                                        <mat-option value="Upper Intermediate">Upper Intermediate</mat-option>
+                                        <mat-option value="Advanced">Advanced</mat-option>
+                                        <mat-option value="Highly Competent">Highly Competent</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox [disabled]="!german_form_control.value"
+                                              [formControl]="de_at_form_control">Austrian German</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!de_at_form_control.value">
+                                        <mat-option value="Beginner">Beginner</mat-option>
+                                        <mat-option value="Elementary">Elementary</mat-option>
+                                        <mat-option value="Intermediate">Intermediate</mat-option>
+                                        <mat-option value="Upper Intermediate">Upper Intermediate</mat-option>
+                                        <mat-option value="Advanced">Advanced</mat-option>
+                                        <mat-option value="Highly Competent">Highly Competent</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox [disabled]="!german_form_control.value"
+                                              [formControl]="de_ch_form_control">Swiss German</mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-form-field><mat-label>Please select your proficiency</mat-label>
+                                    <mat-select [disabled]="!de_ch_form_control.value">
+                                        <mat-option value="Beginner">Beginner</mat-option>
+                                        <mat-option value="Elementary">Elementary</mat-option>
+                                        <mat-option value="Intermediate">Intermediate</mat-option>
+                                        <mat-option value="Upper Intermediate">Upper Intermediate</mat-option>
+                                        <mat-option value="Advanced">Advanced</mat-option>
+                                        <mat-option value="Highly Competent">Highly Competent</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </td>
                         </tr>
                 </table>

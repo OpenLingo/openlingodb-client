@@ -22,11 +22,18 @@ export class DialectService {
         private messageService : MessageService
     ) {}
 
+    getDialects(): Observable<Dialect[]> {
+        return this.http.get<Dialect[]>(`${this.dialectsUrl}`)
+            .pipe(
+                tap(_ => this.log('fetched dialects')),
+                catchError(this.handleError<Dialect[]>('getDialects', ))
+            );
+    }
     getDialectByID(dialect_id: number): Observable<Dialect> {
         return this.http.get<Dialect>(`${this.dialectsUrl}/${dialect_id}`)
             .pipe(
-                tap(_ => this.log('fetched dialects')),
-                catchError(this.handleError<Dialect>('getDialects', ))
+                tap(_ => this.log(`fetched dialect having ID = ${dialect_id}`)),
+                catchError(this.handleError<Dialect>('getDialectByID', ))
             );
     }
     getDialectsByLanguage(language_id: number): Observable<Dialect[]> {

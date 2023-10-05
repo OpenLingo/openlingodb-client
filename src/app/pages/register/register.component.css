@@ -1,6 +1,5 @@
 table {
     border-collapse: collapse;
-    table-layout: fixed;
 }
 th, td {
     margin: 0;
@@ -8,14 +7,16 @@ th, td {
     vertical-align: top;
     text-align: left;
     border-collapse: collapse;
-}
-th:first-of-type, td:first-of-type {
     border-right: solid whitesmoke;
+}
+th:last-of-type, td:last-of-type {
+    border-right: none;
 }
 form {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    max-width: 400px;
+    min-width: 300px;
 }
 .register-container {
 }
