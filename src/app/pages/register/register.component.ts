@@ -37,7 +37,6 @@ export class RegisterComponent implements OnInit {
     de_at_proficiency_form_control: FormControl = new FormControl({disabled: true});
     de_ch_proficiency_form_control: FormControl = new FormControl({disabled: true});
 
-
     constructor(
         private dialectService: DialectService,
         private languageService: LanguageService,
