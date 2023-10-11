@@ -25,37 +25,29 @@
             </form></td>
             <td>
                 <table>
-                    <section>
+                    <section *ngFor="let language of languages">
                         <tr>
-                            <td colspan="4"><div class="mat-headline-6">English:</div></td>
+                            <td colspan="4"><div class="mat-headline-6">{{language['title']}}:</div></td>
                         </tr>
                         <tr>
-                            <td><mat-checkbox>American English</mat-checkbox></td>
-                            <td><mat-checkbox>Australian English</mat-checkbox></td>
-                            <td><mat-checkbox>British English</mat-checkbox></td>
-                            <td><mat-checkbox>Canadian English</mat-checkbox></td>
+                            <td *ngFor="let dialect of filterDialects(language['id'])">
+                                <mat-checkbox (click)="addUserDialect(dialect['id'])">
+                                    {{dialect['title']}}
+                                </mat-checkbox>
+                            </td>
                         </tr>
                         <tr>
-                            <td><mat-form-field>
-                                <mat-label>Proficiency</mat-label>
-                                <mat-select>
-                                    <mat-option>Functional</mat-option>
-                                    <mat-option>Vocational</mat-option>
-                                    <mat-option>Competent</mat-option>
-                                    <mat-option>Proficient</mat-option>
-                                    <mat-option>Superior</mat-option>
-                                </mat-select>
-                            </mat-form-field></td>
-                        </tr>
-                    </section>
-                    <section>
-                        <tr>
-                            <td colspan="4"><div class="mat-headline-6">German:</div></td>
-                        </tr>
-                        <tr>
-                            <td><mat-checkbox>High German</mat-checkbox></td>
-                            <td><mat-checkbox>Austrian German</mat-checkbox></td>
-                            <td><mat-checkbox>Swiss German</mat-checkbox></td>
+                            <td *ngFor="let dialect of filterDialects(language['id'])">
+                                <mat-form-field>
+                                    <mat-label>Proficiency</mat-label>
+                                    <mat-select>
+                                        <mat-option *ngFor="let level of filterLevels(language['id'])"
+                                                    [value]="level['id']">
+                                            {{level['title']}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
                         </tr>
                     </section>
                 </table>
