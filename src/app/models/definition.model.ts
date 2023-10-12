@@ -3,7 +3,7 @@ export class Definition {
 
     constructor(
         public id: number = 0,
-        public dialect_id: number = 0, // to be changed later
+        public dialect_id: number | null = null, // to be changed later
         public noun_id: number = 0,
         public text: string = '',
     ) {}

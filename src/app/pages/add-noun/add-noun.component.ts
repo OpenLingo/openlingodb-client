@@ -64,6 +64,7 @@ export class AddNounComponent implements OnInit {
         }
         if (!this.language.is_gendered) {
             this.disableGenderSelect = true;
+            this.gender = null;
             return;
         }
         this.disableGenderSelect = false;
@@ -77,9 +78,15 @@ export class AddNounComponent implements OnInit {
             console.log("Gender required for gendered languages.");
             return
         }
-        let noun: Noun = new Noun(0, this.language.id, null, this.gender, this.word);
-        this.nounService.insertNoun(noun)
-            .subscribe(() => this.goBack());
+
+        let noun: Noun;
+        if (this.language.is_gendered) {
+            noun = new Noun(0, this.language.id, null, this.gender, this.word);
+            this.nounService.insertNoun(noun).subscribe(() => this.goBack());
+            return;
+        }
+        noun = new Noun(0, this.language.id, null, null, this.word);
+        this.nounService.insertNoun(noun).subscribe(() => this.goBack());
     }
     goBack(): void {
         this.location.back();

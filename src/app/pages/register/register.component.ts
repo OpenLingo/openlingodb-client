@@ -4,9 +4,12 @@ import {Form, FormBuilder, FormControl, FormArray, FormsModule, ReactiveFormsMod
 import { Dialect } from "../../models/dialect.model";
 import { Language } from "../../models/language.model";
 import { Level } from "../../models/level.model";
+import { User } from "../../models/user.model";
+
 import { DialectService } from "../../services/dialect.service";
 import { LanguageService } from "../../services/language.service";
 import { LevelService } from "../../services/level.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
     selector: 'app-register',
@@ -19,14 +22,19 @@ export class RegisterComponent implements OnInit {
     dialects: Dialect[] = [];
     languages: Language[] = [];
     levels: Level[] = [];
+    users: User[] = [];
 
+    email: string | null = null;
+    confirm_email: string | null = null;
+    password: string | null = null;
+    confirm_password: string | null = null;
     user_dialects: Dialect[] = [];
 
     constructor(
         private dialectService: DialectService,
         private languageService: LanguageService,
         private levelService: LevelService,
-        private _formBuilder: FormBuilder
+        private userService: UserService
     ) {}
 
     ngOnInit(): void {
@@ -42,9 +50,13 @@ export class RegisterComponent implements OnInit {
             .subscribe((incoming_levels: Level[]): void => {
                 this.levels = incoming_levels;
             });
+        this.userService.getUsers()
+            .subscribe((incoming_users: User[]): void => {
+                this.users = incoming_users;
+            })
     }
     submit(): void {
-        console.log(this.user_dialects);
+        this.addUser();
     }
     filterDialects(language_id: number | undefined): Dialect[] { // I hate red squiggly lines
         let dialects: Dialect[] = [];
@@ -64,17 +76,27 @@ export class RegisterComponent implements OnInit {
         });
         return levels;
     }
-    addUserDialect(dialect_id: number | undefined): void {
-        this.user_dialects.forEach((dialect: Dialect, index: number): void => {
-            if (dialect['id'] == dialect_id) {
-                this.user_dialects.splice(index, 1);
-                return;
-            }
-        });
-        this.dialects.forEach((dialect: Dialect): void => {
-            if (dialect['id'] == dialect_id) {
-                this.user_dialects.push(dialect);
-            }
-        });
+    addUserDialect(dialect: Dialect | undefined): void {
+        if (this.user_dialects.includes(dialect!)) {
+            this.user_dialects.splice(this.user_dialects.indexOf(dialect!), 1);
+            return;
+        }
+        this.user_dialects.push(dialect!);
+    }
+    addUser(): void {
+        if (!this.email || !this.confirm_email || !this.password || !this.confirm_password) {
+            console.log('please fill out all fields.');
+            return;
+        }
+        if (this.email != this.confirm_email) {
+            console.log('emails do not match.');
+            return;
+        }
+        if (this.password != this.confirm_password) {
+            console.log('passwords do not match.');
+            return;
+        }
+        let user = new User(0, this.email, this.password, 'Contributor', 'UTC+10');
+        this.userService.insertUser(user).subscribe();
     }
 }

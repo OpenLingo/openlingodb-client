@@ -7,19 +7,19 @@
             <td><form style="padding: 40px;">
                 <mat-form-field>
                     <mat-label>email</mat-label>
-                    <input matInput type="text">
+                    <input name="email" [(ngModel)]="email" matInput type="text">
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>confirm_email</mat-label>
-                    <input matInput type="text">
+                    <mat-label>confirm email</mat-label>
+                    <input name="confirm email" [(ngModel)]="confirm_email" matInput type="text">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>password</mat-label>
-                    <input matInput type="text">
+                    <input name="password" [(ngModel)]="password" matInput type="password">
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>confirm_password</mat-label>
-                    <input matInput type="text">
+                    <mat-label>confirm password</mat-label>
+                    <input name="confirm password" [(ngModel)]="confirm_password" matInput type="password">
                 </mat-form-field>
                 <button mat-raised-button color="accent" (click)="submit()">Submit</button>
             </form></td>
@@ -31,7 +31,7 @@
                         </tr>
                         <tr>
                             <td *ngFor="let dialect of filterDialects(language['id'])">
-                                <mat-checkbox (click)="addUserDialect(dialect['id'])">
+                                <mat-checkbox (click)="addUserDialect(dialect)">
                                     {{dialect['title']}}
                                 </mat-checkbox>
                             </td>
