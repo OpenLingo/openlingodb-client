@@ -25,31 +25,59 @@
             </form></td>
             <td>
                 <table>
-                    <section *ngFor="let language of languages">
-                        <tr>
-                            <td colspan="4"><div class="mat-headline-6">{{language['title']}}:</div></td>
-                        </tr>
-                        <tr>
-                            <td *ngFor="let dialect of filterDialects(language['id'])">
-                                <mat-checkbox (click)="addUserDialect(dialect)">
+                    <tr>
+                        <td><mat-form-field>
+                            <mat-label>Language</mat-label>
+                            <mat-select [(ngModel)]="selected_language">
+                                <mat-option *ngFor="let language of languages" value="{{language['id']}}">
+                                    {{language['title']}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field></td>
+                        <td><mat-form-field>
+                            <mat-label>Dialect</mat-label>
+                            <mat-select [disabled]="selected_language == null" [(ngModel)]="selected_dialect">
+                                <mat-option *ngFor="let dialect of dialects" value="{{dialect['id']}}">
                                     {{dialect['title']}}
-                                </mat-checkbox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td *ngFor="let dialect of filterDialects(language['id'])">
-                                <mat-form-field>
-                                    <mat-label>Proficiency</mat-label>
-                                    <mat-select>
-                                        <mat-option *ngFor="let level of filterLevels(language['id'])"
-                                                    [value]="level['id']">
-                                            {{level['title']}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                    </section>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field></td>
+                        <td><mat-form-field>
+                            <mat-label>Proficiency</mat-label>
+                            <mat-select [disabled]="selected_dialect == null" [(ngModel)]="selected_proficiency">
+                                <mat-option value="Beginner">Beginner</mat-option>
+                                <mat-option value="Elementary">Elementary</mat-option>
+                                <mat-option value="Intermediate">Intermediate</mat-option>
+                                <mat-option value="Advanced">Advanced</mat-option>
+                                <mat-option value="Highly Competent">Highly Competent</mat-option>
+                                <mat-option value="Native">Native</mat-option>
+                            </mat-select>
+                        </mat-form-field></td>
+                        <td style="vertical-align: middle">
+                            <button mat-raised-button color="primary" (click)="addLanguage()">Add Language</button>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let user_language of user_languages">
+                        <td colspan="4">
+                            <mat-card>
+                                <mat-card-content>
+                                    <table style="table-layout: fixed;">
+                                        <tr>
+                                            <td><p>Language: {{user_language['language_id']}}</p></td>
+                                            <td><p>Dialect: {{user_language['dialect_id']}}</p></td>
+                                            <td><p>Proficiency: {{user_language['proficiency']}}</p></td>
+                                        </tr>
+                                    </table>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button mat-button
+                                            (click)="removeLanguage(user_language['language_id'], user_language['dialect_id'])">
+                                        Remove
+                                    </button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

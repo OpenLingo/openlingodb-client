@@ -28,7 +28,11 @@ export class RegisterComponent implements OnInit {
     confirm_email: string | null = null;
     password: string | null = null;
     confirm_password: string | null = null;
-    user_dialects: Dialect[] = [];
+
+    selected_language: number | null = null;
+    selected_dialect: number | null = null;
+    selected_proficiency: string | null = null;
+    user_languages: {language_id: number, dialect_id: number, proficiency: string}[] = [];
 
     constructor(
         private dialectService: DialectService,
@@ -56,12 +60,35 @@ export class RegisterComponent implements OnInit {
             })
     }
     submit(): void {
-        this.addUser();
+        // this.addUser();
+        console.log(this.user_languages)
     }
-    filterDialects(language_id: number | undefined): Dialect[] { // I hate red squiggly lines
+    addLanguage(): void {
+        if (!this.selected_language || !this.selected_dialect || !this.selected_proficiency) {
+            console.log('empty fields');
+            return;
+        }
+        this.user_languages.push({
+            language_id: this.selected_language,
+            dialect_id: this.selected_dialect,
+            proficiency:this.selected_proficiency
+        });
+        this.selected_language = this.selected_dialect = this.selected_proficiency = null;
+    }
+    removeLanguage(language_id: number, dialect_id: number): void {
+        this.user_languages.forEach((user_language, index: number): void => {
+           if (user_language['language_id'] == language_id && user_language['dialect_id'] == dialect_id) {
+               this.user_languages.splice(index, 1);
+           }
+        });
+    }
+    filterDialects(language: Language | null): Dialect[] { // I hate red squiggly lines
         let dialects: Dialect[] = [];
+        if (!language) {
+            return dialects;
+        }
         this.dialects.forEach((dialect: Dialect): void => {
-            if (dialect['language_id'] == language_id!) { // I really hate red squiggly lines
+            if (dialect['language_id'] == language!['id']) { // I really hate red squiggly lines
                 dialects.push(dialect);
             }
         });
@@ -75,13 +102,6 @@ export class RegisterComponent implements OnInit {
             }
         });
         return levels;
-    }
-    addUserDialect(dialect: Dialect | undefined): void {
-        if (this.user_dialects.includes(dialect!)) {
-            this.user_dialects.splice(this.user_dialects.indexOf(dialect!), 1);
-            return;
-        }
-        this.user_dialects.push(dialect!);
     }
     addUser(): void {
         if (!this.email || !this.confirm_email || !this.password || !this.confirm_password) {
