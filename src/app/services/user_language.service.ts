@@ -4,14 +4,14 @@ import { Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 
-import { User } from "../models/user.model";
+import { User_language } from "../models/user_language.model";
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class UserService {
-    private usersUrl: string = 'http://127.0.0.1:5000/api/user';
+export class User_languageService {
+    private user_languagesUrl: string = 'http://127.0.0.1:5000/api/user_language';
     // No idea what this does.
     httpOptions = {
         headers: new HttpHeaders({'Content-type': 'application/json'})
@@ -22,27 +22,20 @@ export class UserService {
         private messageService : MessageService
     ) {}
 
-    getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(`${this.usersUrl}`)
+    getUserLanguages(): Observable<User_language[]> {
+        return this.http.get<User_language[]>(`${this.user_languagesUrl}`)
             .pipe(
                 tap(_ => this.log('fetched dialects')),
-                catchError(this.handleError<User[]>('getDialects', ))
+                catchError(this.handleError<User_language[]>('getDialects', ))
             );
     }
-    getUserByEmail(email: string): Observable<User> {
-        return this.http.get<User>(`${this.usersUrl}/${email}`)
-            .pipe(
-                tap(_ => this.log('fetched user')),
-                catchError(this.handleError<User>('getUserByEmail', ))
-            );
-    }
-    insertUser(user: User): Observable<any> {
-        return this.http.put(`${this.usersUrl}/insert`, user, this.httpOptions)
+    insertUserLanguage(user_language: User_language): Observable<any> {
+        return this.http.put(`${this.user_languagesUrl}/insert`, user_language, this.httpOptions)
             .pipe(
                 tap(_ => this.log(
-                    `inserted user having email: '${user.email}'`
+                    `inserted language for user having user id: '${user_language.user_id}'`
                 )),
-                catchError(this.handleError<User>(`insertUser email=${user.email}`))
+                catchError(this.handleError<User_language>(`insertUserLanguage user=${user_language.user_id}`))
             )
     }
     private log(message: string) {

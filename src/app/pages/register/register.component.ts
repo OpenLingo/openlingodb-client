@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from "@angular/common";
 import {Form, FormBuilder, FormControl, FormArray, FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import { Dialect } from "../../models/dialect.model";
@@ -10,6 +11,8 @@ import { DialectService } from "../../services/dialect.service";
 import { LanguageService } from "../../services/language.service";
 import { LevelService } from "../../services/level.service";
 import { UserService } from "../../services/user.service";
+import { User_languageService } from "../../services/user_language.service";
+import {User_language} from "../../models/user_language.model";
 
 @Component({
     selector: 'app-register',
@@ -32,13 +35,19 @@ export class RegisterComponent implements OnInit {
     selected_language: number | null = null;
     selected_dialect: number | null = null;
     selected_proficiency: string | null = null;
+    selected_proficiency_options: string[] = [
+        "Beginner", "Elementary", "Intermediate", "Advanced", "Highly Competent", "Native"
+    ];
     user_languages: {language_id: number, dialect_id: number, proficiency: string}[] = [];
 
     constructor(
         private dialectService: DialectService,
         private languageService: LanguageService,
         private levelService: LevelService,
-        private userService: UserService
+        private userService: UserService,
+        private user_languageService: User_languageService,
+
+        private location: Location
     ) {}
 
     ngOnInit(): void {
@@ -60,8 +69,12 @@ export class RegisterComponent implements OnInit {
             })
     }
     submit(): void {
-        // this.addUser();
-        console.log(this.user_languages)
+        if (this.user_languages.length < 1) {
+            console.log('you must add at least one language.')
+            return;
+        }
+        this.addUser();
+
     }
     addLanguage(): void {
         if (!this.selected_language || !this.selected_dialect || !this.selected_proficiency) {
@@ -82,27 +95,6 @@ export class RegisterComponent implements OnInit {
            }
         });
     }
-    filterDialects(language: Language | null): Dialect[] { // I hate red squiggly lines
-        let dialects: Dialect[] = [];
-        if (!language) {
-            return dialects;
-        }
-        this.dialects.forEach((dialect: Dialect): void => {
-            if (dialect['language_id'] == language!['id']) { // I really hate red squiggly lines
-                dialects.push(dialect);
-            }
-        });
-        return dialects;
-    }
-    filterLevels(language_id: number | undefined): Level[] {
-        let levels: Level[] = [];
-        this.levels.forEach((level: Level): void => {
-            if (level['language_id'] == language_id!) {
-                levels.push(level);
-            }
-        });
-        return levels;
-    }
     addUser(): void {
         if (!this.email || !this.confirm_email || !this.password || !this.confirm_password) {
             console.log('please fill out all fields.');
@@ -117,6 +109,27 @@ export class RegisterComponent implements OnInit {
             return;
         }
         let user = new User(0, this.email, this.password, 'Contributor', 'UTC+10');
-        this.userService.insertUser(user).subscribe();
+        this.userService.insertUser(user).subscribe(_ => this.addUserLanguages());
+    }
+    addUserLanguages(): void {
+        if(this.user_languages.length < 1) {
+            console.log('you must add at least one language.')
+            return;
+        }
+        this.userService.getUserByEmail(this.email!).subscribe((incoming_user: User): void => {
+           let user_id: number = incoming_user['id'];
+            this.user_languages.forEach(user_language => {
+                let outgoing_user_language: User_language = new User_language(
+                    0,
+                    user_language['dialect_id'],
+                    1,
+                    user_id,
+                    user_language['proficiency']
+                );
+                console.log(outgoing_user_language)
+                this.user_languageService.insertUserLanguage(outgoing_user_language)
+                    .subscribe(_ => this.location.back());
+            });
+        });
     }
 }

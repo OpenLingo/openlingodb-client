@@ -45,12 +45,9 @@
                         <td><mat-form-field>
                             <mat-label>Proficiency</mat-label>
                             <mat-select [disabled]="selected_dialect == null" [(ngModel)]="selected_proficiency">
-                                <mat-option value="Beginner">Beginner</mat-option>
-                                <mat-option value="Elementary">Elementary</mat-option>
-                                <mat-option value="Intermediate">Intermediate</mat-option>
-                                <mat-option value="Advanced">Advanced</mat-option>
-                                <mat-option value="Highly Competent">Highly Competent</mat-option>
-                                <mat-option value="Native">Native</mat-option>
+                                <mat-option *ngFor="let option of selected_proficiency_options" value="{{option}}">
+                                    {{option}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field></td>
                         <td style="vertical-align: middle">
